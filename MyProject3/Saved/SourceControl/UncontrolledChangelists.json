@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"D:/unreal/MyProject3/Content/StarterContent/Architecture/Floor_400x400.uasset",
+				"D:/unreal/MyProject3/Content/Assets/Foundation.uasset",
+				"D:/unreal/MyProject3/Content/Assets/M_Foundation.uasset",
+				"D:/unreal/MyProject3/Content/Assets/M_Wall.uasset",
+				"D:/unreal/MyProject3/Content/Assets/T_Foundation_albedo.uasset",
+				"D:/unreal/MyProject3/Content/Assets/T_Foundation_mixmap.uasset",
+				"D:/unreal/MyProject3/Content/Assets/T_Foundation_normal.uasset",
+				"D:/unreal/MyProject3/Content/Assets/T_Wall_albedo.uasset",
+				"D:/unreal/MyProject3/Content/Assets/T_Wall_mixmap.uasset",
+				"D:/unreal/MyProject3/Content/Assets/T_Wall_normal.uasset",
+				"D:/unreal/MyProject3/Content/Assets/Wall.uasset",
+				"D:/unreal/MyProject3/Content/BuildResourceSystem/BuildResource.uasset",
+				"D:/unreal/MyProject3/Content/BP_ThirdPersonCharacter.uasset",
+				"D:/unreal/MyProject3/Content/BuildMode/BuildingMesh.uasset",
+				"D:/unreal/MyProject3/Content/NewBlueprint.uasset",
+				"D:/unreal/MyProject3/Content/Assets/Foundation_2.uasset",
+				"D:/unreal/MyProject3/Content/BuildMode/NewDataTable.uasset",
+				"D:/unreal/MyProject3/Content/BuildMode/NewDataTable.uasset",
+				"D:/unreal/MyProject3/Content/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.uasset",
+				"D:/unreal/MyProject3/Content/BuildMode/BuildMeshList.uasset",
+				"D:/unreal/MyProject3/Content/BuildMode/MeshDatabase.uasset",
+				"D:/unreal/MyProject3/Content/BuildMode/Meshes.uasset",
+				"D:/unreal/MyProject3/Content/BuildMode/MeshData.uasset",
+				"D:/unreal/MyProject3/Content/TestBP.uasset",
+				"D:/unreal/MyProject3/Content/T_Wall_mixmap.uasset",
+				"D:/unreal/MyProject3/Content/T_Foundation_mixmap.uasset",
+				"D:/unreal/MyProject3/Content/M_Foundation.uasset",
+				"D:/unreal/MyProject3/Content/M_Wall.uasset",
+				"D:/unreal/MyProject3/Content/TestActor.uasset",
+				"D:/unreal/MyProject3/Content/Foundation.uasset",
+				"D:/unreal/MyProject3/Content/MyBuildActor.uasset",
+				"D:/unreal/MyProject3/Content/Wall.uasset",
+				"D:/unreal/MyProject3/Content/T_Wall_normal.uasset",
+				"D:/unreal/MyProject3/Content/T_Wall_albedo.uasset",
+				"D:/unreal/MyProject3/Content/T_Foundation_normal.uasset",
+				"D:/unreal/MyProject3/Content/T_Foundation_albedo.uasset",
+				"D:/unreal/MyProject3/Content/__ExternalActors__/ThirdPerson/Maps/ThirdPersonMap/C/ZH/XT53P7DZ9T4Y5CAGTFOONA.uasset"
+			]
+		}
+	]
+}

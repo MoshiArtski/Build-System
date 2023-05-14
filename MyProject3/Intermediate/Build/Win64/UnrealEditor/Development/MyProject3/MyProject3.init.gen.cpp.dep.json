@@ -1,0 +1,13 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unreal\\myproject3\\intermediate\\build\\win64\\unrealeditor\\inc\\myproject3\\uht\\myproject3.init.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unreal\\myproject3\\intermediate\\build\\win64\\myproject3editor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "d:\\unreal\\myproject3\\intermediate\\build\\win64\\unrealeditor\\development\\myproject3\\definitions.myproject3.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
