@@ -60,42 +60,29 @@ void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 		if (CachedLineTraceResult.bBlockingHit)
 		{
-			if (bEnableSnapping)
+			ABuildActor* HitBuildingActor = GetHitBuildingActor(CachedLineTraceResult);
+			if (HitBuildingActor && bEnableSnapping)
 			{
-				FVector BoxExtent = FVector(BuildingTraceRange, 50.0f, 50.0f);
-				TArray<FHitResult> BoxTraceResults = PerformBoxTrace(BoxExtent, Debug);
-
-				for (const FHitResult& HitResult : BoxTraceResults)
-				{
-					if (ABuildActor* HitBuildingActor = GetHitBuildingActor(HitResult))
-					{
-						int32 HitIndex = HitBuildingActor->GetHitIndex(HitResult);
-						FTransform SocketToAttach = HitBuildingActor->GetHitSocketTransform(CachedLineTraceResult, HitResult);
-						SpawnLocation = SocketToAttach.GetLocation();
-
-
-						if (GEngine)
-						{
-							GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Instance index: %d"), HitIndex));
-						}
-						break;
-					}
-					else
-					{
-						FVector GridSize(GridSizeInput, GridSizeInput, GridSizeInput);
-						FVector SnappedLocation = FVector(
-							FMath::GridSnap(CachedLineTraceResult.Location.X, GridSize.X),
-							FMath::GridSnap(CachedLineTraceResult.Location.Y, GridSize.Y),
-							FMath::GridSnap(CachedLineTraceResult.Location.Z, GridSize.Z)
-						);
-						SpawnLocation = SnappedLocation;
-					}
-				}
-
+				int32 HitIndex = HitBuildingActor->GetHitIndex(CachedLineTraceResult);
+				FTransform SocketToAttach = HitBuildingActor->GetHitSocketTransform(CachedLineTraceResult, CachedLineTraceResult);
+				SpawnLocation = SocketToAttach.GetLocation();
 			}
 			else
 			{
-				SpawnLocation = CachedLineTraceResult.Location;
+				if (bEnableSnapping)
+				{
+					FVector GridSize(GridSizeInput, GridSizeInput, GridSizeInput);
+					FVector SnappedLocation = FVector(
+						FMath::GridSnap(CachedLineTraceResult.Location.X, GridSize.X),
+						FMath::GridSnap(CachedLineTraceResult.Location.Y, GridSize.Y),
+						FMath::GridSnap(CachedLineTraceResult.Location.Z, GridSize.Z)
+					);
+					SpawnLocation = SnappedLocation;
+				}
+				else
+				{
+					SpawnLocation = CachedLineTraceResult.Location;
+				}
 			}
 		}
 
@@ -103,7 +90,6 @@ void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 		float SnapAngle = 45.0f;
 		float Yaw = FMath::GridSnap(BuildGhostMesh->GetComponentRotation().Yaw, SnapAngle);
 		SpawnRotation = FRotator(0.0f, Yaw, 0.0f);
-
 
 		FTransform NewTransform(SpawnRotation, SpawnLocation);
 		FTransform ResultTransform;
@@ -118,6 +104,7 @@ void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 		BuildGhostMesh->SetHiddenInGame(true);
 	}
 }
+
 
 void UBuildComponent::RotateBuilding(float DeltaRotation)
 {

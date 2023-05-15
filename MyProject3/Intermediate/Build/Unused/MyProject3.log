@@ -6,11 +6,11 @@
   Determining max actions to execute in parallel (12 physical cores, 24 logical cores)
     Executing up to 12 processes, one per physical core
   Building 4 actions with 4 processes...
-  [1/4] Compile ResourceSystem.cpp
+  [1/4] Compile BuildComponent.cpp
   [2/4] Link UnrealEditor-MyProject3.lib
      Creating library D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\UnrealEditor-MyProject3.lib and object D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\UnrealEditor-MyProject3.exp
   [3/4] Link UnrealEditor-MyProject3.dll
      Creating library D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\UnrealEditor-MyProject3.suppressed.lib and object D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\UnrealEditor-MyProject3.suppressed.exp
   [4/4] WriteMetadata MyProject3Editor.target
-  Total time in Parallel executor: 6.16 seconds
-  Total execution time: 6.65 seconds
+  Total time in Parallel executor: 11.40 seconds
+  Total execution time: 14.74 seconds
