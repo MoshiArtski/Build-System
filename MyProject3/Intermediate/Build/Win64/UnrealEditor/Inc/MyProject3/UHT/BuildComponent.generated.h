@@ -19,7 +19,6 @@ struct FHitResult;
 #define FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_16_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execSpawnBuilding); \
-	DECLARE_FUNCTION(execPerformBoxTrace); \
 	DECLARE_FUNCTION(execGetBuildMode); \
 	DECLARE_FUNCTION(execSetBuildMode); \
 	DECLARE_FUNCTION(execPerformLineTrace); \
@@ -31,7 +30,6 @@ struct FHitResult;
 #define FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execSpawnBuilding); \
-	DECLARE_FUNCTION(execPerformBoxTrace); \
 	DECLARE_FUNCTION(execGetBuildMode); \
 	DECLARE_FUNCTION(execSetBuildMode); \
 	DECLARE_FUNCTION(execPerformLineTrace); \

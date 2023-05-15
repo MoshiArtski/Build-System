@@ -12,5 +12,5 @@
   [3/4] Link UnrealEditor-MyProject3.dll
      Creating library D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\UnrealEditor-MyProject3.suppressed.lib and object D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\UnrealEditor-MyProject3.suppressed.exp
   [4/4] WriteMetadata MyProject3Editor.target
-  Total time in Parallel executor: 11.40 seconds
-  Total execution time: 14.74 seconds
+  Total time in Parallel executor: 6.04 seconds
+  Total execution time: 6.58 seconds

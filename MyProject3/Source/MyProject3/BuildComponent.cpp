@@ -4,8 +4,6 @@
 #include "Engine/World.h"
 #include "Kismet/KismetSystemLibrary.h"
 
-
-
 // Sets default values for this component's properties
 UBuildComponent::UBuildComponent()
 {
@@ -127,7 +125,8 @@ FHitResult UBuildComponent::PerformLineTrace(const int LineTraceRange, bool bDeb
 	TraceParams.bTraceComplex = true;
 	TraceParams.bReturnPhysicalMaterial = true;
 
-	bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, SpawnLocation, SpawnEnd, ECC_Camera, TraceParams);
+	// Modify the following line:
+	bool bHit = GetWorld()->SweepSingleByChannel(HitResult, SpawnLocation, SpawnEnd, FQuat::Identity, ECC_Camera, FCollisionShape::MakeCapsule(SnappingSensitivity, SnappingSensitivity), TraceParams);
 
 	if (bDebug)
 	{
@@ -135,7 +134,7 @@ FHitResult UBuildComponent::PerformLineTrace(const int LineTraceRange, bool bDeb
 		float DebugLineLifetime = 5.0f;
 		uint8 DepthPriority = 0;
 		float LineThickness = 2.0f;
-		DrawDebugLine(GetWorld(), SpawnLocation, SpawnEnd, DebugLineColor, true, DebugLineLifetime, DepthPriority, LineThickness);
+		DrawDebugCapsule(GetWorld(), SpawnLocation + 0.5 * (SpawnEnd - SpawnLocation), 10.0f, 50.0f, FQuat::Identity, DebugLineColor, true, DebugLineLifetime, DepthPriority, LineThickness);
 	}
 
 	return HitResult;
@@ -232,75 +231,3 @@ UStaticMesh* UBuildComponent::GetDataFromDataTable(FName RowName)
 	return nullptr;
 }
 
-TArray<FHitResult> UBuildComponent::PerformConeTrace(const float TraceRange, const float ConeHalfAngle, bool bDebug)
-{
-
-	//FVector SpawnLocation = Owner->GetActorLocation() + Owner->GetActorForwardVector() * 20.0f;
-	//FVector SpawnDirection = Camera->GetForwardVector();
-
-
-	FVector SpawnLocation = Camera->GetComponentLocation();
-	FVector SpawnDirection = Camera->GetForwardVector();
-	FVector EndLocation = SpawnDirection * TraceRange + SpawnLocation;
-
-	TArray<FHitResult> HitResults;
-
-	FCollisionQueryParams TraceParams;
-	TraceParams.AddIgnoredActor(Owner);
-	TraceParams.bTraceComplex = true;
-	TraceParams.bReturnPhysicalMaterial = true;
-
-	GetWorld()->SweepMultiByChannel(
-		HitResults,
-		SpawnLocation,
-		EndLocation,
-		FQuat::Identity,
-		ECC_Camera,
-		FCollisionShape::MakeSphere(ConeHalfAngle * TraceRange),
-		TraceParams
-	);
-
-	if (bDebug)
-	{
-		DrawDebugCone(GetWorld(), SpawnLocation, EndLocation - SpawnLocation, TraceRange, ConeHalfAngle, ConeHalfAngle, 10, FColor::Yellow, true, 5.0f, 0, 1.0f);
-	}
-
-	return HitResults;
-}
-
-TArray<FHitResult> UBuildComponent::PerformBoxTrace(const FVector& BoxExtent, bool bDebug)
-{
-	FVector SpawnLocation = Camera->GetComponentLocation();
-	FVector SpawnDirection = Camera->GetForwardVector();
-	FVector EndLocation = SpawnLocation + SpawnDirection * BuildingTraceRange;
-
-	// Rotate the box extent based on the camera's rotation
-	FVector RotatedBoxExtent = Camera->GetComponentRotation().RotateVector(BoxExtent);
-
-	TArray<FHitResult> HitResults;
-
-	FCollisionQueryParams TraceParams;
-	TraceParams.AddIgnoredActor(Owner);
-	TraceParams.bTraceComplex = true;
-	TraceParams.bReturnPhysicalMaterial = true;
-
-	GetWorld()->SweepMultiByChannel(
-		HitResults,
-		SpawnLocation,
-		EndLocation,
-		FQuat::Identity,
-		ECC_Camera,
-		FCollisionShape::MakeBox(RotatedBoxExtent), // Use the rotated box extent
-		TraceParams
-	);
-
-	if (bDebug)
-	{
-		for (const FHitResult& Hit : HitResults)
-		{
-			DrawDebugBox(GetWorld(), Hit.Location, RotatedBoxExtent, FColor::Cyan, true, 5.0f, 0, 1.0f);
-		}
-	}
-
-	return HitResults;
-}

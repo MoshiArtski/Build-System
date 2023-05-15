@@ -36,11 +36,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode")
 	bool Debug;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building")
 	bool bEnableSnapping;
 
-	UPROPERTY(EditAnywhere, Category = "Build Mode")
-	float SnappingSensitivity = 3000.0f;
+	UPROPERTY(EditDefaultsOnly, Category = "Build Mode")
+	float SnappingSensitivity = 10.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode")
 	float GridSizeInput = 30.0f;
@@ -88,11 +88,6 @@ protected:
 
 	ABuildActor* GetHitBuildingActor(const FHitResult& HitResult);
 
-	// .h file
-
-	UFUNCTION(BlueprintCallable, Category = "BuildComponent")
-		TArray<FHitResult> PerformBoxTrace(const FVector& BoxExtent, bool bDebug);
-
 
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;	
@@ -116,7 +111,5 @@ private:
 	UStaticMeshComponent* BuildGhostMesh;
 	int32 CurrentRowIndex;
 	FHitResult CachedLineTraceResult;
-	TArray<FHitResult> PerformConeTrace(const float TraceRange, const float ConeHalfAngle, bool bDebug);
-	FTimerHandle UpdateCachedLineTraceResultTimerHandle;
 	TArray<FName> socketNames;
 };
