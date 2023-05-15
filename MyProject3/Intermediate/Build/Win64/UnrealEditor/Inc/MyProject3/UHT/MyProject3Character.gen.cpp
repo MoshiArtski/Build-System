@@ -173,15 +173,15 @@ void EmptyLinkFunctionForGeneratedCodeMyProject3Character() {}
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(AMyProject3Character);
 	AMyProject3Character::~AMyProject3Character() {}
-	struct Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_MyProject3Character_h_Statics
+	struct Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_MyProject3Character_h_Statics
 	{
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_MyProject3Character_h_Statics::ClassInfo[] = {
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_MyProject3Character_h_Statics::ClassInfo[] = {
 		{ Z_Construct_UClass_AMyProject3Character, AMyProject3Character::StaticClass, TEXT("AMyProject3Character"), &Z_Registration_Info_UClass_AMyProject3Character, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AMyProject3Character), 2582517742U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_MyProject3Character_h_4046909568(TEXT("/Script/MyProject3"),
-		Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_MyProject3Character_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_MyProject3Character_h_Statics::ClassInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_MyProject3Character_h_4046909568(TEXT("/Script/MyProject3"),
+		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_MyProject3Character_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_MyProject3Character_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

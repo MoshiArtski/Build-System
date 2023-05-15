@@ -1,8 +1,8 @@
 {
 	"SourceFiles": [
-		"D:\\unreal\\MyProject3\\Source\\MyProject3\\MyProject3.Build.cs",
-		"D:\\unreal\\MyProject3\\Source\\MyProject3.Target.cs",
-		"D:\\unreal\\MyProject3\\Source\\MyProject3Editor.Target.cs"
+		"D:\\BuildSystem\\MyProject3\\Source\\MyProject3\\MyProject3.Build.cs",
+		"D:\\BuildSystem\\MyProject3\\Source\\MyProject3.Target.cs",
+		"D:\\BuildSystem\\MyProject3\\Source\\MyProject3Editor.Target.cs"
 	],
 	"EngineVersion": "5.1.1"
 }

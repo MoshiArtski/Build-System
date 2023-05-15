@@ -62,9 +62,10 @@ void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 		{
 			if (bEnableSnapping)
 			{
-				TArray<FHitResult> ConeTraceResults = PerformConeTrace(BuildingTraceRange, FMath::DegreesToRadians(45.0f) / SnappingSensitivity, Debug);
+				FVector BoxExtent = FVector(BuildingTraceRange, 50.0f, 50.0f);
+				TArray<FHitResult> BoxTraceResults = PerformBoxTrace(BoxExtent, Debug);
 
-				for (const FHitResult& HitResult : ConeTraceResults)
+				for (const FHitResult& HitResult : BoxTraceResults)
 				{
 					if (ABuildActor* HitBuildingActor = GetHitBuildingActor(HitResult))
 					{
@@ -247,8 +248,7 @@ UStaticMesh* UBuildComponent::GetDataFromDataTable(FName RowName)
 TArray<FHitResult> UBuildComponent::PerformConeTrace(const float TraceRange, const float ConeHalfAngle, bool bDebug)
 {
 
-	//FVector SpawnLocation = Owner->GetActorLocation() + Owner->Ge
-	// tActorForwardVector() * 20.0f;
+	//FVector SpawnLocation = Owner->GetActorLocation() + Owner->GetActorForwardVector() * 20.0f;
 	//FVector SpawnDirection = Camera->GetForwardVector();
 
 
@@ -276,6 +276,43 @@ TArray<FHitResult> UBuildComponent::PerformConeTrace(const float TraceRange, con
 	if (bDebug)
 	{
 		DrawDebugCone(GetWorld(), SpawnLocation, EndLocation - SpawnLocation, TraceRange, ConeHalfAngle, ConeHalfAngle, 10, FColor::Yellow, true, 5.0f, 0, 1.0f);
+	}
+
+	return HitResults;
+}
+
+TArray<FHitResult> UBuildComponent::PerformBoxTrace(const FVector& BoxExtent, bool bDebug)
+{
+	FVector SpawnLocation = Camera->GetComponentLocation();
+	FVector SpawnDirection = Camera->GetForwardVector();
+	FVector EndLocation = SpawnLocation + SpawnDirection * BuildingTraceRange;
+
+	// Rotate the box extent based on the camera's rotation
+	FVector RotatedBoxExtent = Camera->GetComponentRotation().RotateVector(BoxExtent);
+
+	TArray<FHitResult> HitResults;
+
+	FCollisionQueryParams TraceParams;
+	TraceParams.AddIgnoredActor(Owner);
+	TraceParams.bTraceComplex = true;
+	TraceParams.bReturnPhysicalMaterial = true;
+
+	GetWorld()->SweepMultiByChannel(
+		HitResults,
+		SpawnLocation,
+		EndLocation,
+		FQuat::Identity,
+		ECC_Camera,
+		FCollisionShape::MakeBox(RotatedBoxExtent), // Use the rotated box extent
+		TraceParams
+	);
+
+	if (bDebug)
+	{
+		for (const FHitResult& Hit : HitResults)
+		{
+			DrawDebugBox(GetWorld(), Hit.Location, RotatedBoxExtent, FColor::Cyan, true, 5.0f, 0, 1.0f);
+		}
 	}
 
 	return HitResults;

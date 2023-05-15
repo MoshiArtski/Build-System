@@ -361,19 +361,19 @@ template<> MYPROJECT3_API UScriptStruct* StaticStruct<FBuildingMeshData>()
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(ABuildActor);
 	ABuildActor::~ABuildActor() {}
-	struct Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildActor_h_Statics
+	struct Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics
 	{
 		static const FStructRegisterCompiledInInfo ScriptStructInfo[];
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildActor_h_Statics::ScriptStructInfo[] = {
+	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ScriptStructInfo[] = {
 		{ FBuildingMeshData::StaticStruct, Z_Construct_UScriptStruct_FBuildingMeshData_Statics::NewStructOps, TEXT("BuildingMeshData"), &Z_Registration_Info_UScriptStruct_BuildingMeshData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBuildingMeshData), 157305133U) },
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildActor_h_Statics::ClassInfo[] = {
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ClassInfo[] = {
 		{ Z_Construct_UClass_ABuildActor, ABuildActor::StaticClass, TEXT("ABuildActor"), &Z_Registration_Info_UClass_ABuildActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABuildActor), 452489692U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildActor_h_4099293997(TEXT("/Script/MyProject3"),
-		Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildActor_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildActor_h_Statics::ClassInfo),
-		Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildActor_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildActor_h_Statics::ScriptStructInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_4099293997(TEXT("/Script/MyProject3"),
+		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ClassInfo),
+		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ScriptStructInfo),
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

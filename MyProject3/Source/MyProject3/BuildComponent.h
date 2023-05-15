@@ -88,6 +88,12 @@ protected:
 
 	ABuildActor* GetHitBuildingActor(const FHitResult& HitResult);
 
+	// .h file
+
+	UFUNCTION(BlueprintCallable, Category = "BuildComponent")
+		TArray<FHitResult> PerformBoxTrace(const FVector& BoxExtent, bool bDebug);
+
+
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;	
 
@@ -99,8 +105,6 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Build")
 	float OverlapRadius;
-
-
 
 private:
 	AActor* Owner;

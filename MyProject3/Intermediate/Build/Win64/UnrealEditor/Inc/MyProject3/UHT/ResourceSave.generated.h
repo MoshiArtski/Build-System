@@ -14,7 +14,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define MYPROJECT3_ResourceSave_generated_h
 
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_15_GENERATED_BODY \
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_15_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FBuildResource_Statics; \
 	MYPROJECT3_API static class UScriptStruct* StaticStruct(); \
 	typedef FTableRowBase Super;
@@ -22,18 +22,18 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 template<> MYPROJECT3_API UScriptStruct* StaticStruct<struct FBuildResource>();
 
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_28_GENERATED_BODY \
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_28_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FResourceQuantity_Statics; \
 	MYPROJECT3_API static class UScriptStruct* StaticStruct();
 
 
 template<> MYPROJECT3_API UScriptStruct* StaticStruct<struct FResourceQuantity>();
 
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_SPARSE_DATA
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_RPC_WRAPPERS
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_RPC_WRAPPERS_NO_PURE_DECLS
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_ACCESSORS
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_INCLASS_NO_PURE_DECLS \
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_SPARSE_DATA
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_RPC_WRAPPERS
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_RPC_WRAPPERS_NO_PURE_DECLS
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_ACCESSORS
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUResourceSave(); \
 	friend struct Z_Construct_UClass_UResourceSave_Statics; \
@@ -42,7 +42,7 @@ public: \
 	DECLARE_SERIALIZER(UResourceSave)
 
 
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_INCLASS \
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_INCLASS \
 private: \
 	static void StaticRegisterNativesUResourceSave(); \
 	friend struct Z_Construct_UClass_UResourceSave_Statics; \
@@ -51,7 +51,7 @@ public: \
 	DECLARE_SERIALIZER(UResourceSave)
 
 
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_STANDARD_CONSTRUCTORS \
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UResourceSave(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UResourceSave) \
@@ -65,7 +65,7 @@ public: \
 	NO_API virtual ~UResourceSave();
 
 
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_ENHANCED_CONSTRUCTORS \
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API UResourceSave(UResourceSave&&); \
@@ -77,27 +77,27 @@ public: \
 	NO_API virtual ~UResourceSave();
 
 
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_41_PROLOG
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_GENERATED_BODY_LEGACY \
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_41_PROLOG
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_SPARSE_DATA \
-	FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_RPC_WRAPPERS \
-	FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_ACCESSORS \
-	FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_INCLASS \
-	FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_STANDARD_CONSTRUCTORS \
+	FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_SPARSE_DATA \
+	FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_RPC_WRAPPERS \
+	FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_ACCESSORS \
+	FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_INCLASS \
+	FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_GENERATED_BODY \
+#define FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_SPARSE_DATA \
-	FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_ACCESSORS \
-	FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_INCLASS_NO_PURE_DECLS \
-	FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_ENHANCED_CONSTRUCTORS \
+	FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_SPARSE_DATA \
+	FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_ACCESSORS \
+	FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_INCLASS_NO_PURE_DECLS \
+	FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_44_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -105,7 +105,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> MYPROJECT3_API UClass* StaticClass<class UResourceSave>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_MyProject3_Source_MyProject3_Public_ResourceSave_h
+#define CURRENT_FILE_ID FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

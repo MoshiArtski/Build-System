@@ -1,6 +1,6 @@
-D:\unreal\MyProject3\Intermediate\Build\Win64\UnrealEditor\Inc\MyProject3\UHT\MyBuildComponent.gen.cpp
+D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Inc\MyProject3\UHT\MyBuildComponent.gen.cpp
 /I .
-/I D:\unreal\MyProject3\Source\MyProject3\Private
+/I D:\BuildSystem\MyProject3\Source\MyProject3\Private
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Engine\UHT
 /I Runtime
 /I ..\Shaders\Shared
@@ -270,9 +270,9 @@ D:\unreal\MyProject3\Intermediate\Build\Win64\UnrealEditor\Inc\MyProject3\UHT\My
 /I Runtime\MovieSceneCapture\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController\UHT
 /I Developer\AnimationDataController\Public
-/I D:\unreal\MyProject3\Intermediate\Build\Win64\UnrealEditor\Inc\MyProject3\UHT
-/I D:\unreal\MyProject3\Source
-/I D:\unreal\MyProject3\Source\MyProject3\Public
+/I D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Inc\MyProject3\UHT
+/I D:\BuildSystem\MyProject3\Source
+/I D:\BuildSystem\MyProject3\Source\MyProject3\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AugmentedReality\UHT
 /I Runtime\AugmentedReality\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\MRMesh\UHT
@@ -289,12 +289,12 @@ D:\unreal\MyProject3\Intermediate\Build\Win64\UnrealEditor\Inc\MyProject3\UHT\My
 /external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\shared"
 /external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\um"
 /external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\winrt"
-/FI"D:\unreal\MyProject3\Intermediate\Build\Win64\MyProject3Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/FI"D:\unreal\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\Definitions.MyProject3.h"
-/Yu"D:\unreal\MyProject3\Intermediate\Build\Win64\MyProject3Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/Fp"D:\unreal\MyProject3\Intermediate\Build\Win64\MyProject3Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
-/Fo"D:\unreal\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\MyBuildComponent.gen.cpp.obj"
-/sourceDependencies D:\unreal\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\MyBuildComponent.gen.cpp.dep.json
+/FI"D:\BuildSystem\MyProject3\Intermediate\Build\Win64\MyProject3Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/FI"D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\Definitions.MyProject3.h"
+/Yu"D:\BuildSystem\MyProject3\Intermediate\Build\Win64\MyProject3Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/Fp"D:\BuildSystem\MyProject3\Intermediate\Build\Win64\MyProject3Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
+/Fo"D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\MyBuildComponent.gen.cpp.obj"
+/sourceDependencies D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\MyBuildComponent.gen.cpp.dep.json
 /Zc:inline
 /nologo
 /Oi

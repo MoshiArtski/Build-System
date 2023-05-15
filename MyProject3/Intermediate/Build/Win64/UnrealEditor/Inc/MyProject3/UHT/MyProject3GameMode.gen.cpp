@@ -75,15 +75,15 @@ void EmptyLinkFunctionForGeneratedCodeMyProject3GameMode() {}
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(AMyProject3GameMode);
 	AMyProject3GameMode::~AMyProject3GameMode() {}
-	struct Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_MyProject3GameMode_h_Statics
+	struct Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_MyProject3GameMode_h_Statics
 	{
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_MyProject3GameMode_h_Statics::ClassInfo[] = {
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_MyProject3GameMode_h_Statics::ClassInfo[] = {
 		{ Z_Construct_UClass_AMyProject3GameMode, AMyProject3GameMode::StaticClass, TEXT("AMyProject3GameMode"), &Z_Registration_Info_UClass_AMyProject3GameMode, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AMyProject3GameMode), 999656056U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_MyProject3GameMode_h_1911625142(TEXT("/Script/MyProject3"),
-		Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_MyProject3GameMode_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_MyProject3GameMode_h_Statics::ClassInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_MyProject3GameMode_h_1911625142(TEXT("/Script/MyProject3"),
+		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_MyProject3GameMode_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_MyProject3GameMode_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

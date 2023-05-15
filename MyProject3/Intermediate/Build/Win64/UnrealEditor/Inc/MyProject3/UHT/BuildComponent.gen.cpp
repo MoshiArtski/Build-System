@@ -10,6 +10,7 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 // Cross Module References
+	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 	ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 	ENGINE_API UClass* Z_Construct_UClass_UDataTable_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UMaterialInterface_NoRegister();
@@ -24,6 +25,15 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 		P_FINISH;
 		P_NATIVE_BEGIN;
 		P_THIS->SpawnBuilding();
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(UBuildComponent::execPerformBoxTrace)
+	{
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_BoxExtent);
+		P_GET_UBOOL(Z_Param_bDebug);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(TArray<FHitResult>*)Z_Param__Result=P_THIS->PerformBoxTrace(Z_Param_Out_BoxExtent,Z_Param_bDebug);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(UBuildComponent::execGetBuildMode)
@@ -79,6 +89,7 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 			{ "ChangeMesh", &UBuildComponent::execChangeMesh },
 			{ "DeleteBuild", &UBuildComponent::execDeleteBuild },
 			{ "GetBuildMode", &UBuildComponent::execGetBuildMode },
+			{ "PerformBoxTrace", &UBuildComponent::execPerformBoxTrace },
 			{ "PerformLineTrace", &UBuildComponent::execPerformLineTrace },
 			{ "RotateBuilding", &UBuildComponent::execRotateBuilding },
 			{ "SetBuildMode", &UBuildComponent::execSetBuildMode },
@@ -169,6 +180,65 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 		if (!ReturnFunction)
 		{
 			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UBuildComponent_GetBuildMode_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics
+	{
+		struct BuildComponent_eventPerformBoxTrace_Parms
+		{
+			FVector BoxExtent;
+			bool bDebug;
+			TArray<FHitResult> ReturnValue;
+		};
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_BoxExtent_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_BoxExtent;
+		static void NewProp_bDebug_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_bDebug;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_ReturnValue_Inner;
+		static const UECodeGen_Private::FArrayPropertyParams NewProp_ReturnValue;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_BoxExtent_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_BoxExtent = { "BoxExtent", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(BuildComponent_eventPerformBoxTrace_Parms, BoxExtent), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_BoxExtent_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_BoxExtent_MetaData)) };
+	void Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_bDebug_SetBit(void* Obj)
+	{
+		((BuildComponent_eventPerformBoxTrace_Parms*)Obj)->bDebug = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_bDebug = { "bDebug", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(BuildComponent_eventPerformBoxTrace_Parms), &Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_bDebug_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_ReturnValue_Inner = { "ReturnValue", nullptr, (EPropertyFlags)0x0000008000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, 0, Z_Construct_UScriptStruct_FHitResult, METADATA_PARAMS(nullptr, 0) }; // 1287526515
+	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010008000000580, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(BuildComponent_eventPerformBoxTrace_Parms, ReturnValue), EArrayPropertyFlags::None, METADATA_PARAMS(nullptr, 0) }; // 1287526515
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_BoxExtent,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_bDebug,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_ReturnValue_Inner,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::Function_MetaDataParams[] = {
+		{ "Category", "BuildComponent" },
+		{ "Comment", "// .h file\n" },
+		{ "ModuleRelativePath", "BuildComponent.h" },
+		{ "ToolTip", ".h file" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UBuildComponent, nullptr, "PerformBoxTrace", nullptr, nullptr, sizeof(Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::BuildComponent_eventPerformBoxTrace_Parms), Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C80401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UBuildComponent_PerformBoxTrace()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UBuildComponent_PerformBoxTrace_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -412,6 +482,7 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 		{ &Z_Construct_UFunction_UBuildComponent_ChangeMesh, "ChangeMesh" }, // 2154729542
 		{ &Z_Construct_UFunction_UBuildComponent_DeleteBuild, "DeleteBuild" }, // 3369132726
 		{ &Z_Construct_UFunction_UBuildComponent_GetBuildMode, "GetBuildMode" }, // 2808053901
+		{ &Z_Construct_UFunction_UBuildComponent_PerformBoxTrace, "PerformBoxTrace" }, // 1997042234
 		{ &Z_Construct_UFunction_UBuildComponent_PerformLineTrace, "PerformLineTrace" }, // 1711098384
 		{ &Z_Construct_UFunction_UBuildComponent_RotateBuilding, "RotateBuilding" }, // 2748466213
 		{ &Z_Construct_UFunction_UBuildComponent_SetBuildMode, "SetBuildMode" }, // 3657673962
@@ -601,15 +672,15 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(UBuildComponent);
 	UBuildComponent::~UBuildComponent() {}
-	struct Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildComponent_h_Statics
+	struct Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_Statics
 	{
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UBuildComponent, UBuildComponent::StaticClass, TEXT("UBuildComponent"), &Z_Registration_Info_UClass_UBuildComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBuildComponent), 1098845211U) },
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_Statics::ClassInfo[] = {
+		{ Z_Construct_UClass_UBuildComponent, UBuildComponent::StaticClass, TEXT("UBuildComponent"), &Z_Registration_Info_UClass_UBuildComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBuildComponent), 1933291496U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildComponent_h_2148768025(TEXT("/Script/MyProject3"),
-		Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_BuildComponent_h_Statics::ClassInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_1543379390(TEXT("/Script/MyProject3"),
+		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

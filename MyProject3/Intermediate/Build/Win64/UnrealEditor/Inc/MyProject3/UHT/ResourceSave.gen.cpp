@@ -289,20 +289,20 @@ template<> MYPROJECT3_API UScriptStruct* StaticStruct<FResourceQuantity>()
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(UResourceSave);
 	UResourceSave::~UResourceSave() {}
-	struct Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics
+	struct Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics
 	{
 		static const FStructRegisterCompiledInInfo ScriptStructInfo[];
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics::ScriptStructInfo[] = {
+	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics::ScriptStructInfo[] = {
 		{ FBuildResource::StaticStruct, Z_Construct_UScriptStruct_FBuildResource_Statics::NewStructOps, TEXT("BuildResource"), &Z_Registration_Info_UScriptStruct_BuildResource, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBuildResource), 3915769165U) },
 		{ FResourceQuantity::StaticStruct, Z_Construct_UScriptStruct_FResourceQuantity_Statics::NewStructOps, TEXT("ResourceQuantity"), &Z_Registration_Info_UScriptStruct_ResourceQuantity, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FResourceQuantity), 2626433634U) },
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics::ClassInfo[] = {
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics::ClassInfo[] = {
 		{ Z_Construct_UClass_UResourceSave, UResourceSave::StaticClass, TEXT("UResourceSave"), &Z_Registration_Info_UClass_UResourceSave, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UResourceSave), 435398028U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_1204234642(TEXT("/Script/MyProject3"),
-		Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics::ClassInfo),
-		Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics::ScriptStructInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_1204234642(TEXT("/Script/MyProject3"),
+		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics::ClassInfo),
+		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_Public_ResourceSave_h_Statics::ScriptStructInfo),
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
