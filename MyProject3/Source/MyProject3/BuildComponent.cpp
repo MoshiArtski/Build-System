@@ -64,6 +64,7 @@ void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 				int32 HitIndex = HitBuildingActor->GetHitIndex(CachedLineTraceResult);
 				FTransform SocketToAttach = HitBuildingActor->GetHitSocketTransform(CachedLineTraceResult, CachedLineTraceResult);
 				SpawnLocation = SocketToAttach.GetLocation();
+				SpawnRotation = SocketToAttach.GetRotation().Rotator(); // Update the rotation based on the socket transform
 			}
 			else
 			{
@@ -84,14 +85,11 @@ void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 			}
 		}
 
-		// Snapping rotation
-		float SnapAngle = 45.0f;
-		float Yaw = FMath::GridSnap(BuildGhostMesh->GetComponentRotation().Yaw, SnapAngle);
-		SpawnRotation = FRotator(0.0f, Yaw, 0.0f);
+		FVector OffsetSpawnLocation = SpawnLocation;
 
-		FTransform NewTransform(SpawnRotation, SpawnLocation);
+		FTransform NewTransform(SpawnRotation, OffsetSpawnLocation);
 		FTransform ResultTransform;
-		ResultTransform.SetLocation(SpawnLocation);
+		ResultTransform.SetLocation(OffsetSpawnLocation);
 		ResultTransform.SetRotation(NewTransform.GetRotation());
 		BuildGhostMesh->SetWorldTransform(ResultTransform);
 
@@ -102,6 +100,7 @@ void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 		BuildGhostMesh->SetHiddenInGame(true);
 	}
 }
+
 
 
 void UBuildComponent::RotateBuilding(float DeltaRotation)
@@ -230,4 +229,3 @@ UStaticMesh* UBuildComponent::GetDataFromDataTable(FName RowName)
 
 	return nullptr;
 }
-
