@@ -29,36 +29,15 @@ void UBuildComponent::UpdateBuildComponent()
 			ABuildActor* HitBuildingActor = GetHitBuildingActor(CachedLineTraceResult);
 			if (HitBuildingActor && bEnableSnapping)
 			{
-				int32 HitIndex = HitBuildingActor->GetHitIndex(CachedLineTraceResult);
-				FTransform SocketToAttach = HitBuildingActor->GetHitSocketTransform(CachedLineTraceResult, CachedLineTraceResult, socketTagList);
-				SpawnLocation = SocketToAttach.GetLocation();
-				SpawnRotation = SocketToAttach.GetRotation().Rotator(); 
+				SpawnLocation = GetSpawnLocationWithSocketAttachment(HitBuildingActor, SpawnRotation);
 			}
 			else
 			{
-				if (bEnableSnapping)
-				{
-					FVector GridSize(GridSizeInput, GridSizeInput, GridSizeInput);
-					FVector SnappedLocation = FVector(
-						FMath::GridSnap(CachedLineTraceResult.Location.X, GridSize.X),
-						FMath::GridSnap(CachedLineTraceResult.Location.Y, GridSize.Y),
-						FMath::GridSnap(CachedLineTraceResult.Location.Z, GridSize.Z)
-					);
-					SpawnLocation = SnappedLocation;
-				}
-				else
-				{
-					SpawnLocation = CachedLineTraceResult.Location;
-				}
+				SpawnLocation = GetSpawnLocationWithSnapping();
 			}
 		}
 
-		FTransform NewTransform(SpawnRotation, SpawnLocation);
-		FTransform ResultTransform;
-		ResultTransform.SetLocation(SpawnLocation);
-		ResultTransform.SetRotation(NewTransform.GetRotation());
-		BuildGhostMesh->SetWorldTransform(ResultTransform);
-
+		SetBuildGhostMeshTransform(SpawnLocation, SpawnRotation);
 		BuildGhostMesh->SetHiddenInGame(false);
 	}
 	else
@@ -66,6 +45,56 @@ void UBuildComponent::UpdateBuildComponent()
 		BuildGhostMesh->SetHiddenInGame(true);
 	}
 }
+
+FVector UBuildComponent::GetSpawnLocationWithSocketAttachment(ABuildActor* HitBuildingActor, FRotator& OutSpawnRotation)
+{
+	FVector SpawnLocation;
+	TOptional<FTransform> SocketToAttach = HitBuildingActor->GetHitSocketTransform(CachedLineTraceResult, socketTagList);
+
+	if (SocketToAttach.IsSet())
+	{
+		FTransform SocketTransform = SocketToAttach.GetValue();
+		SpawnLocation = SocketTransform.GetLocation();
+		OutSpawnRotation = SocketTransform.GetRotation().Rotator();
+	}
+	else
+	{
+		SpawnLocation = GetSpawnLocationWithSnapping();
+	}
+
+	return SpawnLocation;
+}
+
+FVector UBuildComponent::GetSpawnLocationWithSnapping()
+{
+	FVector SpawnLocation;
+
+	if (bEnableSnapping)
+	{
+		FVector GridSize(GridSizeInput, GridSizeInput, GridSizeInput);
+		FVector SnappedLocation = FVector(
+			FMath::GridSnap(CachedLineTraceResult.Location.X, GridSize.X),
+			FMath::GridSnap(CachedLineTraceResult.Location.Y, GridSize.Y),
+			FMath::GridSnap(CachedLineTraceResult.Location.Z, GridSize.Z)
+		);
+		SpawnLocation = SnappedLocation;
+	}
+	else
+	{
+		SpawnLocation = CachedLineTraceResult.Location;
+	}
+
+	return SpawnLocation;
+}
+
+void UBuildComponent::SetBuildGhostMeshTransform(const FVector& SpawnLocation, const FRotator& SpawnRotation)
+{
+	FTransform ResultTransform;
+	ResultTransform.SetLocation(SpawnLocation);
+	ResultTransform.SetRotation(SpawnRotation.Quaternion());
+	BuildGhostMesh->SetWorldTransform(ResultTransform);
+}
+
 
 void UBuildComponent::BeginPlay()
 {
@@ -103,6 +132,7 @@ void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
+
 
 void UBuildComponent::RotateBuilding(float DeltaRotation)
 {

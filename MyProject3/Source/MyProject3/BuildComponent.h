@@ -23,58 +23,57 @@ protected:
 	virtual void BeginPlay() override;
 
 	// Build Variables
-	UPROPERTY(BlueprintReadWrite, Category = "Build Mode")
+	UPROPERTY(BlueprintReadWrite, Category = "Build Mode Settings")
 	bool bIsBuildModeOn;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
 	int BuildingTraceRange;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
 	UDataTable* BuildingMeshDataTable;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode")
-	bool Debug;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
 	bool bEnableSnapping;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Build Mode")
+	UPROPERTY(EditDefaultsOnly, Category = "Build Mode Settings")
 	float SnappingSensitivity = 10.0f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
 	float GridSizeInput = 30.0f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building")
-	UStaticMesh* GhostMesh;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
+	float UpdateInterval = 0.01;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Building")
-	UStaticMesh* BuildingMesh;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settingsg")
+	float RotationSpeed;
 
-	UFUNCTION(BlueprintCallable, Category = "Building")
-	void ChangeMesh();
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
+	bool Debug;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Building")
+
+	UPROPERTY(EditDefaultsOnly, Category = "Building Settings")
 	UMaterialInterface* ValidBuildMaterial;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Building")
 	UMaterialInterface* InvalidLocationMaterial;
 
+	// Build Functions
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode")
-	float UpdateInterval;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building")
-	float RotationSpeed;
+	UFUNCTION(BlueprintCallable, Category = "Build Mode")
+	void SpawnBuilding();
 
 	UFUNCTION(BlueprintCallable, Category = "Building")
 	void RotateBuilding(float DeltaRotation);
 
-	// Build Functions
+	UFUNCTION(BlueprintCallable, Category = "Building")
+	void ChangeMesh();
 
 	UFUNCTION(BlueprintCallable, Category = "Build Mode")
 	void DeleteBuild();
 
-	UFUNCTION(BlueprintCallable, Category = "Build Mode")
+	// Support Functions
+
+	UFUNCTION(BlueprintCallable, Category = "Build")
 	FHitResult PerformLineTrace(const int LineTraceRange, bool bDebug = false);
 
 	UFUNCTION(BlueprintCallable, Category = "Build Mode")
@@ -83,35 +82,68 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Build Mode")
 	FORCEINLINE bool GetBuildMode() { return bIsBuildModeOn;};
 
-	ABuildActor* GetHitBuildingActor(const FHitResult& HitResult);
-
-
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;	
 
-	UFUNCTION(BlueprintCallable, Category = "Build Mode")
-	void SpawnBuilding();
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building")
-	float BuildDistance;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Build")
-	float OverlapRadius;
-
 private:
+	//Caches
+	UPROPERTY()
+	UStaticMesh* GhostMesh;
+
+	UPROPERTY()
+	UStaticMesh* BuildingMesh;
+
+	UPROPERTY()
 	AActor* Owner;
+
+	UPROPERTY()
 	UCameraComponent* Camera;
+
+	UPROPERTY()
 	USkeletalMeshComponent* SkeletalMeshComponent;
+
+	UPROPERTY()
 	TSubclassOf<class ABuildActor> BuildingActorClass;
-	UStaticMesh* GetDataFromDataTable(FName RowName);
+
+	UPROPERTY()
 	TMap<UStaticMesh*, ABuildActor*> BuildingActors;
+
+	UPROPERTY()
 	UStaticMeshComponent* BuildGhostMesh;
+
+	UPROPERTY()
 	int32 CurrentRowIndex;
+
+	UPROPERTY()
 	FHitResult CachedLineTraceResult;
-	TArray<FName> socketNames;
+
+	UPROPERTY()
 	FTimerHandle UpdateBuildComponentTimerHandle;
-	void UpdateBuildComponent();
-	TArray<FBuildingMeshData> BuildingMeshDataArray;
-	void InitializeBuildingMeshDataArray();
+
 	TArray<FString>* socketTagList;
+
+	UPROPERTY()
+	TArray<FBuildingMeshData> BuildingMeshDataArray;
+
+	//Used Functions
+	UFUNCTION()
+	void UpdateBuildComponent();
+
+	UFUNCTION()
+	void InitializeBuildingMeshDataArray();
+
+	UFUNCTION()
+	FVector GetSpawnLocationWithSocketAttachment(ABuildActor* HitBuildingActor, FRotator& OutSpawnRotation);
+
+	UFUNCTION()
+	FVector GetSpawnLocationWithSnapping();
+
+	UFUNCTION()
+	ABuildActor* GetHitBuildingActor(const FHitResult& HitResult);
+
+	UFUNCTION()
+	void SetBuildGhostMeshTransform(const FVector& SpawnLocation, const FRotator& SpawnRotation);
+
+	UFUNCTION()
+	UStaticMesh* GetDataFromDataTable(FName RowName);
 };

@@ -5,12 +5,22 @@
   Using Visual Studio 2022 14.33.31631 toolchain (D:\New folder (3)\VC\Tools\MSVC\14.33.31629) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
   Determining max actions to execute in parallel (12 physical cores, 24 logical cores)
     Executing up to 12 processes, one per physical core
-  Building 4 actions with 4 processes...
-  [1/4] Compile MyProject3.init.gen.cpp
-  [2/4] Link UnrealEditor-MyProject3.lib
+  Building 14 actions with 12 processes...
+  [1/14] Compile MyBuildComponent.cpp
+  [2/14] Compile MyBuildComponent.gen.cpp
+  [3/14] Compile BuildActor.gen.cpp
+  [4/14] Compile BuildComponent.gen.cpp
+  [5/14] Compile ResourceSave.cpp
+  [6/14] Compile ResourceSystem.gen.cpp
+  [7/14] Compile ResourceSave.gen.cpp
+  [8/14] Compile BuildActor.cpp
+  [9/14] Compile BuildComponent.cpp
+  [10/14] Compile ResourceSystem.cpp
+  [11/14] Compile MyProject3Character.cpp
+  [12/14] Link UnrealEditor-MyProject3.lib
      Creating library D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\UnrealEditor-MyProject3.lib and object D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\UnrealEditor-MyProject3.exp
-  [3/4] Link UnrealEditor-MyProject3.dll
+  [13/14] Link UnrealEditor-MyProject3.dll
      Creating library D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\UnrealEditor-MyProject3.suppressed.lib and object D:\BuildSystem\MyProject3\Intermediate\Build\Win64\UnrealEditor\Development\MyProject3\UnrealEditor-MyProject3.suppressed.exp
-  [4/4] WriteMetadata MyProject3Editor.target
-  Total time in Parallel executor: 8.70 seconds
-  Total execution time: 9.16 seconds
+  [14/14] WriteMetadata MyProject3Editor.target
+  Total time in Parallel executor: 11.45 seconds
+  Total execution time: 12.00 seconds

@@ -9,6 +9,8 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+class ABuildActor;
+class UStaticMesh;
 struct FHitResult;
 #ifdef MYPROJECT3_BuildComponent_generated_h
 #error "BuildComponent.generated.h already included, missing '#pragma once' in BuildComponent.h"
@@ -18,24 +20,38 @@ struct FHitResult;
 #define FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_16_SPARSE_DATA
 #define FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_16_RPC_WRAPPERS \
  \
-	DECLARE_FUNCTION(execSpawnBuilding); \
+	DECLARE_FUNCTION(execGetDataFromDataTable); \
+	DECLARE_FUNCTION(execSetBuildGhostMeshTransform); \
+	DECLARE_FUNCTION(execGetHitBuildingActor); \
+	DECLARE_FUNCTION(execGetSpawnLocationWithSnapping); \
+	DECLARE_FUNCTION(execGetSpawnLocationWithSocketAttachment); \
+	DECLARE_FUNCTION(execInitializeBuildingMeshDataArray); \
+	DECLARE_FUNCTION(execUpdateBuildComponent); \
 	DECLARE_FUNCTION(execGetBuildMode); \
 	DECLARE_FUNCTION(execSetBuildMode); \
 	DECLARE_FUNCTION(execPerformLineTrace); \
 	DECLARE_FUNCTION(execDeleteBuild); \
+	DECLARE_FUNCTION(execChangeMesh); \
 	DECLARE_FUNCTION(execRotateBuilding); \
-	DECLARE_FUNCTION(execChangeMesh);
+	DECLARE_FUNCTION(execSpawnBuilding);
 
 
 #define FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
  \
-	DECLARE_FUNCTION(execSpawnBuilding); \
+	DECLARE_FUNCTION(execGetDataFromDataTable); \
+	DECLARE_FUNCTION(execSetBuildGhostMeshTransform); \
+	DECLARE_FUNCTION(execGetHitBuildingActor); \
+	DECLARE_FUNCTION(execGetSpawnLocationWithSnapping); \
+	DECLARE_FUNCTION(execGetSpawnLocationWithSocketAttachment); \
+	DECLARE_FUNCTION(execInitializeBuildingMeshDataArray); \
+	DECLARE_FUNCTION(execUpdateBuildComponent); \
 	DECLARE_FUNCTION(execGetBuildMode); \
 	DECLARE_FUNCTION(execSetBuildMode); \
 	DECLARE_FUNCTION(execPerformLineTrace); \
 	DECLARE_FUNCTION(execDeleteBuild); \
+	DECLARE_FUNCTION(execChangeMesh); \
 	DECLARE_FUNCTION(execRotateBuilding); \
-	DECLARE_FUNCTION(execChangeMesh);
+	DECLARE_FUNCTION(execSpawnBuilding);
 
 
 #define FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_16_ACCESSORS
