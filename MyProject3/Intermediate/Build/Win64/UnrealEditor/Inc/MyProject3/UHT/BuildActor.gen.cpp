@@ -55,7 +55,7 @@ template<> MYPROJECT3_API UScriptStruct* StaticStruct<FBuildingMeshData>()
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_buildGhostMesh_MetaData[];
 #endif
 		static const UECodeGen_Private::FObjectPtrPropertyParams NewProp_buildGhostMesh;
-		static const UECodeGen_Private::FNamePropertyParams NewProp_socketNames_Inner;
+		static const UECodeGen_Private::FStrPropertyParams NewProp_socketNames_Inner;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_socketNames_MetaData[];
 #endif
@@ -97,7 +97,7 @@ template<> MYPROJECT3_API UScriptStruct* StaticStruct<FBuildingMeshData>()
 	};
 #endif
 	const UECodeGen_Private::FObjectPtrPropertyParams Z_Construct_UScriptStruct_FBuildingMeshData_Statics::NewProp_buildGhostMesh = { "buildGhostMesh", nullptr, (EPropertyFlags)0x0014000000000005, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FBuildingMeshData, buildGhostMesh), Z_Construct_UClass_UStaticMesh_NoRegister, METADATA_PARAMS(Z_Construct_UScriptStruct_FBuildingMeshData_Statics::NewProp_buildGhostMesh_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FBuildingMeshData_Statics::NewProp_buildGhostMesh_MetaData)) };
-	const UECodeGen_Private::FNamePropertyParams Z_Construct_UScriptStruct_FBuildingMeshData_Statics::NewProp_socketNames_Inner = { "socketNames", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, 0, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FBuildingMeshData_Statics::NewProp_socketNames_Inner = { "socketNames", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, 0, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FBuildingMeshData_Statics::NewProp_socketNames_MetaData[] = {
 		{ "Category", "BuildingMeshData" },
@@ -367,12 +367,12 @@ template<> MYPROJECT3_API UScriptStruct* StaticStruct<FBuildingMeshData>()
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ScriptStructInfo[] = {
-		{ FBuildingMeshData::StaticStruct, Z_Construct_UScriptStruct_FBuildingMeshData_Statics::NewStructOps, TEXT("BuildingMeshData"), &Z_Registration_Info_UScriptStruct_BuildingMeshData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBuildingMeshData), 157305133U) },
+		{ FBuildingMeshData::StaticStruct, Z_Construct_UScriptStruct_FBuildingMeshData_Statics::NewStructOps, TEXT("BuildingMeshData"), &Z_Registration_Info_UScriptStruct_BuildingMeshData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBuildingMeshData), 2923310826U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ClassInfo[] = {
 		{ Z_Construct_UClass_ABuildActor, ABuildActor::StaticClass, TEXT("ABuildActor"), &Z_Registration_Info_UClass_ABuildActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABuildActor), 452489692U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_4099293997(TEXT("/Script/MyProject3"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_348991901(TEXT("/Script/MyProject3"),
 		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ClassInfo),
 		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ScriptStructInfo),
 		nullptr, 0);

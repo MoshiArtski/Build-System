@@ -16,7 +16,6 @@ class MYPROJECT3_API UBuildComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this component's properties
 	UBuildComponent();
 
 protected:
@@ -60,11 +59,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Building")
 	UMaterialInterface* InvalidLocationMaterial;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building")
-	float SphereTraceRadius;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Building")
-	float UpdateCachedLineTraceResultInterval;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode")
+	float UpdateInterval;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building")
 	float RotationSpeed;
@@ -112,4 +109,9 @@ private:
 	int32 CurrentRowIndex;
 	FHitResult CachedLineTraceResult;
 	TArray<FName> socketNames;
+	FTimerHandle UpdateBuildComponentTimerHandle;
+	void UpdateBuildComponent();
+	TArray<FBuildingMeshData> BuildingMeshDataArray;
+	void InitializeBuildingMeshDataArray();
+	TArray<FString>* socketTagList;
 };

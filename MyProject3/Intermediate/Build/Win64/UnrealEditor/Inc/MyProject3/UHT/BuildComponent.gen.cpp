@@ -381,13 +381,9 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_InvalidLocationMaterial;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_SphereTraceRadius_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_UpdateInterval_MetaData[];
 #endif
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_SphereTraceRadius;
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_UpdateCachedLineTraceResultInterval_MetaData[];
-#endif
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_UpdateCachedLineTraceResultInterval;
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_UpdateInterval;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_RotationSpeed_MetaData[];
 #endif
@@ -517,19 +513,12 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_InvalidLocationMaterial = { "InvalidLocationMaterial", nullptr, (EPropertyFlags)0x0020080000010001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, InvalidLocationMaterial), Z_Construct_UClass_UMaterialInterface_NoRegister, METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_InvalidLocationMaterial_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_InvalidLocationMaterial_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_SphereTraceRadius_MetaData[] = {
-		{ "Category", "Building" },
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateInterval_MetaData[] = {
+		{ "Category", "Build Mode" },
 		{ "ModuleRelativePath", "BuildComponent.h" },
 	};
 #endif
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_SphereTraceRadius = { "SphereTraceRadius", nullptr, (EPropertyFlags)0x0020080000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, SphereTraceRadius), METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_SphereTraceRadius_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_SphereTraceRadius_MetaData)) };
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateCachedLineTraceResultInterval_MetaData[] = {
-		{ "Category", "Building" },
-		{ "ModuleRelativePath", "BuildComponent.h" },
-	};
-#endif
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateCachedLineTraceResultInterval = { "UpdateCachedLineTraceResultInterval", nullptr, (EPropertyFlags)0x0020080000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, UpdateCachedLineTraceResultInterval), METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateCachedLineTraceResultInterval_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateCachedLineTraceResultInterval_MetaData)) };
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateInterval = { "UpdateInterval", nullptr, (EPropertyFlags)0x0020080000010005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, UpdateInterval), METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateInterval_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateInterval_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_RotationSpeed_MetaData[] = {
 		{ "Category", "Building" },
@@ -563,8 +552,7 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingMesh,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_ValidBuildMaterial,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_InvalidLocationMaterial,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_SphereTraceRadius,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateCachedLineTraceResultInterval,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateInterval,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_RotationSpeed,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildDistance,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_OverlapRadius,
@@ -606,9 +594,9 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UBuildComponent, UBuildComponent::StaticClass, TEXT("UBuildComponent"), &Z_Registration_Info_UClass_UBuildComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBuildComponent), 3232323194U) },
+		{ Z_Construct_UClass_UBuildComponent, UBuildComponent::StaticClass, TEXT("UBuildComponent"), &Z_Registration_Info_UClass_UBuildComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBuildComponent), 3363874057U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_1789997632(TEXT("/Script/MyProject3"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_1129857001(TEXT("/Script/MyProject3"),
 		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

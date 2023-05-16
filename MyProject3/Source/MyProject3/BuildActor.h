@@ -22,7 +22,7 @@ public:
         TObjectPtr<UStaticMesh> buildGhostMesh;
 
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "socketNames"))
-        TArray<FName> socketNames;
+        TArray<FString> socketNames;
 };
 
 UCLASS()
@@ -54,9 +54,9 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Build Mode")
     FTransform GetInstancedSocketTransform(UInstancedStaticMeshComponent* InstancedComponent, int32 InstanceIndex, const FName SocketName, bool& Success, bool bWorldSpace = false);
 
-    FTransform GetClosestSocketTransform(UInstancedStaticMeshComponent* HitComponent, int32 HitIndex, const FVector& HitLocation);
+    FTransform GetClosestSocketTransform(UInstancedStaticMeshComponent* HitComponent, int32 HitIndex, const FVector& HitLocation, const  TArray<FString>* socketTag);
+   
+    FTransform GetHitSocketTransform(const FHitResult& HitResult, const  TArray<FString>* socketTag);
 
-    FTransform GetHitSocketTransform(const FHitResult& HitResult);
-
-    FTransform GetHitSocketTransform(const FHitResult& HitResult, const FHitResult& ComponentHit);
+    FTransform GetHitSocketTransform(const FHitResult& HitResult, const FHitResult& ComponentHit, const  TArray<FString>* socketTag);
 };

@@ -4,7 +4,6 @@
 #include "Engine/World.h"
 #include "Kismet/KismetSystemLibrary.h"
 
-// Sets default values for this component's properties
 UBuildComponent::UBuildComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -17,39 +16,8 @@ UBuildComponent::UBuildComponent()
 	RotationSpeed = 45.0f;
 }
 
-// Called when the game starts
-void UBuildComponent::BeginPlay()
+void UBuildComponent::UpdateBuildComponent()
 {
-	Super::BeginPlay();
-
-	Owner = Cast<AMyProject3Character>(GetOwner());
-
-	if (Owner != nullptr)
-	{
-		Camera = Owner->FindComponentByClass<UCameraComponent>();
-		SkeletalMeshComponent = Owner->FindComponentByClass<USkeletalMeshComponent>();
-	}
-
-	ChangeMesh();
-
-	BuildGhostMesh->SetHiddenInGame(false);
-	BuildGhostMesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-	BuildGhostMesh->SetCollisionResponseToAllChannels(ECR_Block);
-	BuildGhostMesh->SetCastShadow(false);
-	BuildGhostMesh->SetOnlyOwnerSee(false);
-
-	if (Owner != nullptr && Owner->GetRootComponent() != nullptr)
-	{
-		BuildGhostMesh->SetupAttachment(Owner->GetRootComponent());
-	}
-
-	bIsBuildModeOn = false;
-}
-
-void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 	if (bIsBuildModeOn)
 	{
 		CachedLineTraceResult = PerformLineTrace(BuildingTraceRange, Debug);
@@ -62,9 +30,9 @@ void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 			if (HitBuildingActor && bEnableSnapping)
 			{
 				int32 HitIndex = HitBuildingActor->GetHitIndex(CachedLineTraceResult);
-				FTransform SocketToAttach = HitBuildingActor->GetHitSocketTransform(CachedLineTraceResult, CachedLineTraceResult);
+				FTransform SocketToAttach = HitBuildingActor->GetHitSocketTransform(CachedLineTraceResult, CachedLineTraceResult, socketTagList);
 				SpawnLocation = SocketToAttach.GetLocation();
-				SpawnRotation = SocketToAttach.GetRotation().Rotator(); // Update the rotation based on the socket transform
+				SpawnRotation = SocketToAttach.GetRotation().Rotator(); 
 			}
 			else
 			{
@@ -85,11 +53,9 @@ void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 			}
 		}
 
-		FVector OffsetSpawnLocation = SpawnLocation;
-
-		FTransform NewTransform(SpawnRotation, OffsetSpawnLocation);
+		FTransform NewTransform(SpawnRotation, SpawnLocation);
 		FTransform ResultTransform;
-		ResultTransform.SetLocation(OffsetSpawnLocation);
+		ResultTransform.SetLocation(SpawnLocation);
 		ResultTransform.SetRotation(NewTransform.GetRotation());
 		BuildGhostMesh->SetWorldTransform(ResultTransform);
 
@@ -101,7 +67,42 @@ void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	}
 }
 
+void UBuildComponent::BeginPlay()
+{
+	Super::BeginPlay();
 
+	Owner = Cast<AMyProject3Character>(GetOwner());
+
+	if (Owner != nullptr)
+	{
+		Camera = Owner->FindComponentByClass<UCameraComponent>();
+		SkeletalMeshComponent = Owner->FindComponentByClass<USkeletalMeshComponent>();
+	}
+
+	BuildGhostMesh->SetHiddenInGame(false);
+	BuildGhostMesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	BuildGhostMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
+	BuildGhostMesh->SetCastShadow(false);
+	BuildGhostMesh->SetOnlyOwnerSee(false);
+
+	if (Owner != nullptr && Owner->GetRootComponent() != nullptr)
+	{
+		BuildGhostMesh->SetupAttachment(Owner->GetRootComponent());
+	}
+
+	InitializeBuildingMeshDataArray();
+
+	bIsBuildModeOn = false;
+
+	ChangeMesh();
+
+	GetWorld()->GetTimerManager().SetTimer(UpdateBuildComponentTimerHandle, this, &UBuildComponent::UpdateBuildComponent, UpdateInterval, true);
+}
+
+void UBuildComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+}
 
 void UBuildComponent::RotateBuilding(float DeltaRotation)
 {
@@ -124,7 +125,6 @@ FHitResult UBuildComponent::PerformLineTrace(const int LineTraceRange, bool bDeb
 	TraceParams.bTraceComplex = true;
 	TraceParams.bReturnPhysicalMaterial = true;
 
-	// Modify the following line:
 	bool bHit = GetWorld()->SweepSingleByChannel(HitResult, SpawnLocation, SpawnEnd, FQuat::Identity, ECC_Camera, FCollisionShape::MakeCapsule(SnappingSensitivity, SnappingSensitivity), TraceParams);
 
 	if (bDebug)
@@ -182,36 +182,30 @@ void UBuildComponent::SpawnBuilding()
 
 void UBuildComponent::ChangeMesh()
 {
-	if (!BuildingMeshDataTable)
+	int32 NumRows = BuildingMeshDataArray.Num();
+	if (NumRows > 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No Table"));
-		return;
-	}
-	UE_LOG(LogTemp, Warning, TEXT("Table Found"));
-	TArray<FName> RowNames = BuildingMeshDataTable->GetRowNames();
-	CurrentRowIndex = (CurrentRowIndex + 1) % RowNames.Num();
+		CurrentRowIndex = (CurrentRowIndex + 1) % NumRows;
+		FBuildingMeshData& NextRow = BuildingMeshDataArray[CurrentRowIndex];
 
-	FBuildingMeshData* NextRow = BuildingMeshDataTable->FindRow<FBuildingMeshData>(RowNames[CurrentRowIndex], *RowNames[CurrentRowIndex].ToString());
-
-	if (NextRow)
-	{
-		BuildingMesh = NextRow->buildMesh;
-		GhostMesh = NextRow->buildGhostMesh;
-		BuildGhostMesh->SetStaticMesh(GhostMesh);
-		UE_LOG(LogTemp, Warning, TEXT("Set Mesh: %s"), *GhostMesh->GetName());
+		BuildingMesh = NextRow.buildMesh;
+		GhostMesh = NextRow.buildGhostMesh;
+		BuildGhostMesh->SetStaticMesh(BuildingMesh);
+		BuildGhostMesh->SetMaterial(0, ValidBuildMaterial);
+		socketTagList = &NextRow.socketNames;
+		UE_LOG(LogTemp, Warning, TEXT("Set Mesh: %s"), *BuildingMesh->GetName());
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Mesh not found in DataTable"));
+		UE_LOG(LogTemp, Warning, TEXT("Mesh not found in TArray"));
 	}
-
 }
+
 
 ABuildActor* UBuildComponent::GetHitBuildingActor(const FHitResult& HitResult)
 {
 	return Cast<ABuildActor>(HitResult.GetActor());
 }
-
 
 UStaticMesh* UBuildComponent::GetDataFromDataTable(FName RowName)
 {
@@ -228,4 +222,29 @@ UStaticMesh* UBuildComponent::GetDataFromDataTable(FName RowName)
 	}
 
 	return nullptr;
+}
+
+void UBuildComponent::InitializeBuildingMeshDataArray()
+{
+	if (BuildingMeshDataTable)
+	{
+		TArray<FName> RowNames = BuildingMeshDataTable->GetRowNames();
+		for (const FName& RowName : RowNames)
+		{
+			FBuildingMeshData* Row = BuildingMeshDataTable->FindRow<FBuildingMeshData>(RowName, TEXT("MESH"));
+			if (Row)
+			{
+				BuildingMeshDataArray.Add(*Row);
+				UE_LOG(LogTemp, Warning, TEXT("Added row to TArray"));
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Failed to add row to TArray"));
+			}
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No Building Mesh Data Table found"));
+	}
 }

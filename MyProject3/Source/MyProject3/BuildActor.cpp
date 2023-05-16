@@ -123,8 +123,7 @@ int32 ABuildActor::GetHitIndex(const FHitResult& HitResult)
     return ClosestInstanceIndex;
 }
 
-
-FTransform ABuildActor::GetHitSocketTransform(const FHitResult& HitResult)
+FTransform ABuildActor::GetHitSocketTransform(const FHitResult& HitResult, const TArray<FString>* socketTagList)
 {
     int32 HitIndex = GetHitIndex(HitResult);
 
@@ -140,20 +139,20 @@ FTransform ABuildActor::GetHitSocketTransform(const FHitResult& HitResult)
         return FTransform::Identity;
     }
 
-    return GetClosestSocketTransform(HitComponent, HitIndex, HitResult.Location);
+    return GetClosestSocketTransform(HitComponent, HitIndex, HitResult.Location, socketTagList);
 }
 
-FTransform ABuildActor::GetHitSocketTransform(const FHitResult& HitResult, const FHitResult& ComponentHit)
+FTransform ABuildActor::GetHitSocketTransform(const FHitResult& HitResult, const FHitResult& ComponentHit, const TArray<FString>* socketTagList)
 {
     int32 HitIndex = GetHitIndex(ComponentHit);
 
     UInstancedStaticMeshComponent* HitComponent = Cast<UInstancedStaticMeshComponent>(ComponentHit.Component.Get());
 
-    return GetClosestSocketTransform(HitComponent, HitIndex, HitResult.Location);
+    return GetClosestSocketTransform(HitComponent, HitIndex, HitResult.Location, socketTagList);
 }
 
 
-FTransform ABuildActor::GetClosestSocketTransform(UInstancedStaticMeshComponent* HitComponent, int32 HitIndex, const FVector& HitLocation)
+FTransform ABuildActor::GetClosestSocketTransform(UInstancedStaticMeshComponent* HitComponent, int32 HitIndex, const FVector& HitLocation, const TArray<FString>* socketTag)
 {
     if (!HitComponent || HitIndex < 0)
     {
@@ -168,14 +167,19 @@ FTransform ABuildActor::GetClosestSocketTransform(UInstancedStaticMeshComponent*
 
     for (const FName& SocketName : HitComponent->GetAllSocketNames())
     {
-        FTransform SocketTransform = HitComponent->GetSocketTransform(SocketName, ERelativeTransformSpace::RTS_Component);
-        FTransform SocketInstanceTransform = SocketTransform * InstanceTransform;
+        UStaticMeshSocket* Socket = HitComponent->GetStaticMesh()->FindSocket(SocketName);
 
-        float DistanceSquared = FVector::DistSquared(SocketInstanceTransform.GetLocation(), HitLocation);
-        if (DistanceSquared < ClosestDistanceSquared)
+        if (Socket && (!socketTag || socketTag->Contains(Socket->Tag)))
         {
-            ClosestSocketName = SocketName;
-            ClosestDistanceSquared = DistanceSquared;
+            FTransform SocketTransform = HitComponent->GetSocketTransform(SocketName, ERelativeTransformSpace::RTS_Component);
+            FTransform SocketInstanceTransform = SocketTransform * InstanceTransform;
+
+            float DistanceSquared = FVector::DistSquared(SocketInstanceTransform.GetLocation(), HitLocation);
+            if (DistanceSquared < ClosestDistanceSquared)
+            {
+                ClosestSocketName = SocketName;
+                ClosestDistanceSquared = DistanceSquared;
+            }
         }
     }
 
@@ -188,10 +192,9 @@ FTransform ABuildActor::GetClosestSocketTransform(UInstancedStaticMeshComponent*
         {
             GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Instance index: %d, Closest socket name: %s"), HitIndex, *ClosestSocketName.ToString()));
         }
+
         return SocketTransform * InstanceTransform;
     }
-    else
-    {
-        return FTransform::Identity;
-    }
+
+    return FTransform::Identity;
 }
