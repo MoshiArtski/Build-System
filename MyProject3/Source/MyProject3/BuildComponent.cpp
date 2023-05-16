@@ -7,7 +7,6 @@
 UBuildComponent::UBuildComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-
 	BuildingActorClass = ABuildActor::StaticClass();
 	BuildGhostMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BuildMeshComponent"));
 	Debug = false;
@@ -49,7 +48,8 @@ void UBuildComponent::UpdateBuildComponent()
 FVector UBuildComponent::GetSpawnLocationWithSocketAttachment(ABuildActor* HitBuildingActor, FRotator& OutSpawnRotation)
 {
 	FVector SpawnLocation;
-	TOptional<FTransform> SocketToAttach = HitBuildingActor->GetHitSocketTransform(CachedLineTraceResult, socketTagList);
+	TOptional<FTransform> SocketToAttach = HitBuildingActor->GetHitSocketTransform(CachedLineTraceResult, *socketTagList);
+
 
 	if (SocketToAttach.IsSet())
 	{
@@ -61,7 +61,6 @@ FVector UBuildComponent::GetSpawnLocationWithSocketAttachment(ABuildActor* HitBu
 	{
 		SpawnLocation = GetSpawnLocationWithSnapping();
 	}
-
 	return SpawnLocation;
 }
 
@@ -223,7 +222,7 @@ void UBuildComponent::ChangeMesh()
 		BuildGhostMesh->SetStaticMesh(BuildingMesh);
 		BuildGhostMesh->SetMaterial(0, ValidBuildMaterial);
 		socketTagList = &NextRow.socketNames;
-		UE_LOG(LogTemp, Warning, TEXT("Set Mesh: %s"), *BuildingMesh->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Set Mesh: %s"), socketTagList);
 	}
 	else
 	{

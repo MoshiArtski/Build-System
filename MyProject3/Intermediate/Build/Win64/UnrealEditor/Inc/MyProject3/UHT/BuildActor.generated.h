@@ -9,7 +9,6 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
-class UInstancedStaticMeshComponent;
 struct FHitResult;
 #ifdef MYPROJECT3_BuildActor_generated_h
 #error "BuildActor.generated.h already included, missing '#pragma once' in BuildActor.h"
@@ -27,13 +26,11 @@ template<> MYPROJECT3_API UScriptStruct* StaticStruct<struct FBuildingMeshData>(
 #define FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_31_SPARSE_DATA
 #define FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_31_RPC_WRAPPERS \
  \
-	DECLARE_FUNCTION(execGetInstancedSocketTransform); \
 	DECLARE_FUNCTION(execDestroyInstance);
 
 
 #define FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_31_RPC_WRAPPERS_NO_PURE_DECLS \
  \
-	DECLARE_FUNCTION(execGetInstancedSocketTransform); \
 	DECLARE_FUNCTION(execDestroyInstance);
 
 

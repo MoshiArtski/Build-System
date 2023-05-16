@@ -51,12 +51,7 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Build Mode")
     void DestroyInstance(const FHitResult& HitResult);
 
-    UFUNCTION(BlueprintCallable, Category = "Build Mode")
-    FTransform GetInstancedSocketTransform(UInstancedStaticMeshComponent* InstancedComponent, int32 InstanceIndex, const FName SocketName, bool& Success, bool bWorldSpace = false);
+    TOptional<FTransform> GetHitSocketTransform(const FHitResult& HitResult, const TArray<FString>& socketTag);
 
-    FTransform GetClosestSocketTransform(UInstancedStaticMeshComponent* HitComponent, int32 HitIndex, const FVector& HitLocation, const  TArray<FString>* socketTag);
-   
-    FTransform GetHitSocketTransform(const FHitResult& HitResult, const  TArray<FString>* socketTag);
-
-    FTransform GetHitSocketTransform(const FHitResult& HitResult, const FHitResult& ComponentHit, const  TArray<FString>* socketTag);
+    TOptional<FTransform> GetClosestSocketTransform(UInstancedStaticMeshComponent* HitComponent, int32 HitIndex, const FVector& HitLocation, const TArray<FString>& socketTag);
 };

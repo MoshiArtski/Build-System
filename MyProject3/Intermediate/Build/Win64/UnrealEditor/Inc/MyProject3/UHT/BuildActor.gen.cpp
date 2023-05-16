@@ -10,7 +10,6 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeBuildActor() {}
 // Cross Module References
-	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FTransform();
 	ENGINE_API UClass* Z_Construct_UClass_AActor();
 	ENGINE_API UClass* Z_Construct_UClass_UInstancedStaticMeshComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UStaticMesh_NoRegister();
@@ -134,18 +133,6 @@ template<> MYPROJECT3_API UScriptStruct* StaticStruct<FBuildingMeshData>()
 		}
 		return Z_Registration_Info_UScriptStruct_BuildingMeshData.InnerSingleton;
 	}
-	DEFINE_FUNCTION(ABuildActor::execGetInstancedSocketTransform)
-	{
-		P_GET_OBJECT(UInstancedStaticMeshComponent,Z_Param_InstancedComponent);
-		P_GET_PROPERTY(FIntProperty,Z_Param_InstanceIndex);
-		P_GET_PROPERTY(FNameProperty,Z_Param_SocketName);
-		P_GET_UBOOL_REF(Z_Param_Out_Success);
-		P_GET_UBOOL(Z_Param_bWorldSpace);
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		*(FTransform*)Z_Param__Result=P_THIS->GetInstancedSocketTransform(Z_Param_InstancedComponent,Z_Param_InstanceIndex,Z_Param_SocketName,Z_Param_Out_Success,Z_Param_bWorldSpace);
-		P_NATIVE_END;
-	}
 	DEFINE_FUNCTION(ABuildActor::execDestroyInstance)
 	{
 		P_GET_STRUCT_REF(FHitResult,Z_Param_Out_HitResult);
@@ -159,7 +146,6 @@ template<> MYPROJECT3_API UScriptStruct* StaticStruct<FBuildingMeshData>()
 		UClass* Class = ABuildActor::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
 			{ "DestroyInstance", &ABuildActor::execDestroyInstance },
-			{ "GetInstancedSocketTransform", &ABuildActor::execGetInstancedSocketTransform },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
@@ -204,86 +190,6 @@ template<> MYPROJECT3_API UScriptStruct* StaticStruct<FBuildingMeshData>()
 		}
 		return ReturnFunction;
 	}
-	struct Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics
-	{
-		struct BuildActor_eventGetInstancedSocketTransform_Parms
-		{
-			UInstancedStaticMeshComponent* InstancedComponent;
-			int32 InstanceIndex;
-			FName SocketName;
-			bool Success;
-			bool bWorldSpace;
-			FTransform ReturnValue;
-		};
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_InstancedComponent_MetaData[];
-#endif
-		static const UECodeGen_Private::FObjectPropertyParams NewProp_InstancedComponent;
-		static const UECodeGen_Private::FIntPropertyParams NewProp_InstanceIndex;
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_SocketName_MetaData[];
-#endif
-		static const UECodeGen_Private::FNamePropertyParams NewProp_SocketName;
-		static void NewProp_Success_SetBit(void* Obj);
-		static const UECodeGen_Private::FBoolPropertyParams NewProp_Success;
-		static void NewProp_bWorldSpace_SetBit(void* Obj);
-		static const UECodeGen_Private::FBoolPropertyParams NewProp_bWorldSpace;
-		static const UECodeGen_Private::FStructPropertyParams NewProp_ReturnValue;
-		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UECodeGen_Private::FFunctionParams FuncParams;
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_InstancedComponent_MetaData[] = {
-		{ "EditInline", "true" },
-	};
-#endif
-	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_InstancedComponent = { "InstancedComponent", nullptr, (EPropertyFlags)0x0010000000080080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(BuildActor_eventGetInstancedSocketTransform_Parms, InstancedComponent), Z_Construct_UClass_UInstancedStaticMeshComponent_NoRegister, METADATA_PARAMS(Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_InstancedComponent_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_InstancedComponent_MetaData)) };
-	const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_InstanceIndex = { "InstanceIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(BuildActor_eventGetInstancedSocketTransform_Parms, InstanceIndex), METADATA_PARAMS(nullptr, 0) };
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_SocketName_MetaData[] = {
-		{ "NativeConst", "" },
-	};
-#endif
-	const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_SocketName = { "SocketName", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(BuildActor_eventGetInstancedSocketTransform_Parms, SocketName), METADATA_PARAMS(Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_SocketName_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_SocketName_MetaData)) };
-	void Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_Success_SetBit(void* Obj)
-	{
-		((BuildActor_eventGetInstancedSocketTransform_Parms*)Obj)->Success = 1;
-	}
-	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_Success = { "Success", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(BuildActor_eventGetInstancedSocketTransform_Parms), &Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_Success_SetBit, METADATA_PARAMS(nullptr, 0) };
-	void Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_bWorldSpace_SetBit(void* Obj)
-	{
-		((BuildActor_eventGetInstancedSocketTransform_Parms*)Obj)->bWorldSpace = 1;
-	}
-	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_bWorldSpace = { "bWorldSpace", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(BuildActor_eventGetInstancedSocketTransform_Parms), &Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_bWorldSpace_SetBit, METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(BuildActor_eventGetInstancedSocketTransform_Parms, ReturnValue), Z_Construct_UScriptStruct_FTransform, METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_InstancedComponent,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_InstanceIndex,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_SocketName,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_Success,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_bWorldSpace,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::NewProp_ReturnValue,
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::Function_MetaDataParams[] = {
-		{ "Category", "Build Mode" },
-		{ "CPP_Default_bWorldSpace", "false" },
-		{ "ModuleRelativePath", "BuildActor.h" },
-	};
-#endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ABuildActor, nullptr, "GetInstancedSocketTransform", nullptr, nullptr, sizeof(Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::BuildActor_eventGetInstancedSocketTransform_Parms), Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C20401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
 	IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(ABuildActor);
 	UClass* Z_Construct_UClass_ABuildActor_NoRegister()
 	{
@@ -310,7 +216,6 @@ template<> MYPROJECT3_API UScriptStruct* StaticStruct<FBuildingMeshData>()
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_ABuildActor_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_ABuildActor_DestroyInstance, "DestroyInstance" }, // 2499967555
-		{ &Z_Construct_UFunction_ABuildActor_GetInstancedSocketTransform, "GetInstancedSocketTransform" }, // 3436474902
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABuildActor_Statics::Class_MetaDataParams[] = {
@@ -370,9 +275,9 @@ template<> MYPROJECT3_API UScriptStruct* StaticStruct<FBuildingMeshData>()
 		{ FBuildingMeshData::StaticStruct, Z_Construct_UScriptStruct_FBuildingMeshData_Statics::NewStructOps, TEXT("BuildingMeshData"), &Z_Registration_Info_UScriptStruct_BuildingMeshData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBuildingMeshData), 2923310826U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ABuildActor, ABuildActor::StaticClass, TEXT("ABuildActor"), &Z_Registration_Info_UClass_ABuildActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABuildActor), 452489692U) },
+		{ Z_Construct_UClass_ABuildActor, ABuildActor::StaticClass, TEXT("ABuildActor"), &Z_Registration_Info_UClass_ABuildActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABuildActor), 1289712025U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_348991901(TEXT("/Script/MyProject3"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_3804265168(TEXT("/Script/MyProject3"),
 		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ClassInfo),
 		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildActor_h_Statics::ScriptStructInfo),
 		nullptr, 0);

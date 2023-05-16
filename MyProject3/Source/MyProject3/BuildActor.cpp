@@ -42,36 +42,6 @@ void ABuildActor::DestroyInstance(const FHitResult& HitResult)
     }
 }
 
-
-FTransform ABuildActor::GetInstancedSocketTransform(UInstancedStaticMeshComponent* InstancedComponent, int32 InstanceIndex, const FName SocketName, bool& Success, bool bWorldSpace)
-{
-    Success = false;
-
-    if (InstancedComponent && InstancedComponent->IsValidInstance(InstanceIndex))
-    {
-        UStaticMesh* StaticMesh = InstancedComponent->GetStaticMesh();
-
-        if (StaticMesh)
-        {
-            UStaticMeshSocket* Socket = StaticMesh->FindSocket(SocketName);
-
-            if (Socket)
-            {
-                FTransform InstanceTransform;
-                InstancedComponent->GetInstanceTransform(InstanceIndex, InstanceTransform, bWorldSpace);
-
-                FTransform SocketLocalTransform(Socket->RelativeRotation, Socket->RelativeLocation, Socket->RelativeScale);
-
-                FTransform SocketWorldTransform = SocketLocalTransform * InstanceTransform;
-
-                Success = true;
-                return SocketWorldTransform;
-            }
-        }
-    }
-    return FTransform::Identity;
-}
-
 int32 ABuildActor::GetHitIndex(const FHitResult& HitResult)
 {
     if (!HitResult.Component.IsValid())
@@ -115,61 +85,47 @@ int32 ABuildActor::GetHitIndex(const FHitResult& HitResult)
         }
     }
 
-    if (GEngine)
-    {
-        GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Hit index is %d"), ClosestInstanceIndex));
-    }
-    UE_LOG(LogTemp, Warning, TEXT("Hit index is %d"), ClosestInstanceIndex);
     return ClosestInstanceIndex;
 }
 
-FTransform ABuildActor::GetHitSocketTransform(const FHitResult& HitResult, const TArray<FString>* socketTagList)
+TOptional<FTransform> ABuildActor::GetHitSocketTransform(const FHitResult& HitResult, const TArray<FString>& socketTag)
 {
     int32 HitIndex = GetHitIndex(HitResult);
 
     if (!HitResult.Component.IsValid())
     {
-        return FTransform::Identity;
+        return TOptional<FTransform>();
     }
 
     UInstancedStaticMeshComponent* HitComponent = Cast<UInstancedStaticMeshComponent>(HitResult.Component.Get());
 
     if (!HitComponent)
     {
-        return FTransform::Identity;
+        return TOptional<FTransform>();
     }
 
-    return GetClosestSocketTransform(HitComponent, HitIndex, HitResult.Location, socketTagList);
+    return GetClosestSocketTransform(HitComponent, HitIndex, HitResult.Location, socketTag);
 }
 
-FTransform ABuildActor::GetHitSocketTransform(const FHitResult& HitResult, const FHitResult& ComponentHit, const TArray<FString>* socketTagList)
-{
-    int32 HitIndex = GetHitIndex(ComponentHit);
-
-    UInstancedStaticMeshComponent* HitComponent = Cast<UInstancedStaticMeshComponent>(ComponentHit.Component.Get());
-
-    return GetClosestSocketTransform(HitComponent, HitIndex, HitResult.Location, socketTagList);
-}
-
-
-FTransform ABuildActor::GetClosestSocketTransform(UInstancedStaticMeshComponent* HitComponent, int32 HitIndex, const FVector& HitLocation, const TArray<FString>* socketTag)
+TOptional<FTransform> ABuildActor::GetClosestSocketTransform(UInstancedStaticMeshComponent* HitComponent, int32 HitIndex, const FVector& HitLocation, const TArray<FString>& socketTag)
 {
     if (!HitComponent || HitIndex < 0)
     {
-        return FTransform::Identity;
+        return TOptional<FTransform>();
     }
 
     FTransform InstanceTransform;
     HitComponent->GetInstanceTransform(HitIndex, InstanceTransform, true);
 
+    UStaticMesh* StaticMesh = HitComponent->GetStaticMesh();
     FName ClosestSocketName;
     float ClosestDistanceSquared = FLT_MAX;
 
     for (const FName& SocketName : HitComponent->GetAllSocketNames())
     {
-        UStaticMeshSocket* Socket = HitComponent->GetStaticMesh()->FindSocket(SocketName);
+        UStaticMeshSocket* Socket = StaticMesh->FindSocket(SocketName);
 
-        if (Socket && (!socketTag || socketTag->Contains(Socket->Tag)))
+        if (Socket && (socketTag.Num() == 0 || socketTag.Contains(Socket->Tag)))
         {
             FTransform SocketTransform = HitComponent->GetSocketTransform(SocketName, ERelativeTransformSpace::RTS_Component);
             FTransform SocketInstanceTransform = SocketTransform * InstanceTransform;
@@ -182,19 +138,11 @@ FTransform ABuildActor::GetClosestSocketTransform(UInstancedStaticMeshComponent*
             }
         }
     }
-
     if (ClosestSocketName != NAME_None)
     {
         FTransform SocketTransform = HitComponent->GetSocketTransform(ClosestSocketName, ERelativeTransformSpace::RTS_Component);
-        UE_LOG(LogTemp, Warning, TEXT("Instance index: %d, Closest socket name: %s"), HitIndex, *ClosestSocketName.ToString());
-
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Instance index: %d, Closest socket name: %s"), HitIndex, *ClosestSocketName.ToString()));
-        }
-
         return SocketTransform * InstanceTransform;
     }
 
-    return FTransform::Identity;
+    return TOptional<FTransform>();
 }
