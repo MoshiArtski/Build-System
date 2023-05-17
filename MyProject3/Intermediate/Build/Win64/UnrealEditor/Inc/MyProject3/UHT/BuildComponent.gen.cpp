@@ -169,7 +169,7 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBuildComponent_ChangeMesh_Statics::Function_MetaDataParams[] = {
-		{ "Category", "Building" },
+		{ "Category", "Build Mode" },
 		{ "ModuleRelativePath", "BuildComponent.h" },
 	};
 #endif
@@ -458,7 +458,7 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBuildComponent_PerformLineTrace_Statics::Function_MetaDataParams[] = {
-		{ "Category", "Build" },
+		{ "Category", "Trace" },
 		{ "Comment", "// Support Functions\n" },
 		{ "CPP_Default_bDebug", "false" },
 		{ "ModuleRelativePath", "BuildComponent.h" },
@@ -494,7 +494,7 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBuildComponent_RotateBuilding_Statics::Function_MetaDataParams[] = {
-		{ "Category", "Building" },
+		{ "Category", "Build Mode" },
 		{ "ModuleRelativePath", "BuildComponent.h" },
 	};
 #endif
@@ -665,34 +665,34 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 		static void NewProp_bIsBuildModeOn_SetBit(void* Obj);
 		static const UECodeGen_Private::FBoolPropertyParams NewProp_bIsBuildModeOn;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_BuildingTraceRange_MetaData[];
-#endif
-		static const UECodeGen_Private::FUnsizedIntPropertyParams NewProp_BuildingTraceRange;
-#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_BuildingMeshDataTable_MetaData[];
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_BuildingMeshDataTable;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_BuildingTraceRange_MetaData[];
+#endif
+		static const UECodeGen_Private::FUnsizedIntPropertyParams NewProp_BuildingTraceRange;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_bEnableSnapping_MetaData[];
 #endif
 		static void NewProp_bEnableSnapping_SetBit(void* Obj);
 		static const UECodeGen_Private::FBoolPropertyParams NewProp_bEnableSnapping;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_SnappingSensitivity_MetaData[];
-#endif
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_SnappingSensitivity;
-#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_GridSizeInput_MetaData[];
 #endif
 		static const UECodeGen_Private::FFloatPropertyParams NewProp_GridSizeInput;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_UpdateInterval_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_SnappingSensitivity_MetaData[];
 #endif
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_UpdateInterval;
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_SnappingSensitivity;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_RotationSpeed_MetaData[];
 #endif
 		static const UECodeGen_Private::FFloatPropertyParams NewProp_RotationSpeed;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_UpdateInterval_MetaData[];
+#endif
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_UpdateInterval;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_Debug_MetaData[];
 #endif
@@ -766,7 +766,7 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_MyProject3,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_UBuildComponent_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_UBuildComponent_ChangeMesh, "ChangeMesh" }, // 2154729542
+		{ &Z_Construct_UFunction_UBuildComponent_ChangeMesh, "ChangeMesh" }, // 4137601790
 		{ &Z_Construct_UFunction_UBuildComponent_DeleteBuild, "DeleteBuild" }, // 1033745826
 		{ &Z_Construct_UFunction_UBuildComponent_GetBuildMode, "GetBuildMode" }, // 2808053901
 		{ &Z_Construct_UFunction_UBuildComponent_GetDataFromDataTable, "GetDataFromDataTable" }, // 1623759939
@@ -774,8 +774,8 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 		{ &Z_Construct_UFunction_UBuildComponent_GetSpawnLocationWithSnapping, "GetSpawnLocationWithSnapping" }, // 4044917122
 		{ &Z_Construct_UFunction_UBuildComponent_GetSpawnLocationWithSocketAttachment, "GetSpawnLocationWithSocketAttachment" }, // 447489762
 		{ &Z_Construct_UFunction_UBuildComponent_InitializeBuildingMeshDataArray, "InitializeBuildingMeshDataArray" }, // 2093135076
-		{ &Z_Construct_UFunction_UBuildComponent_PerformLineTrace, "PerformLineTrace" }, // 2358493921
-		{ &Z_Construct_UFunction_UBuildComponent_RotateBuilding, "RotateBuilding" }, // 2748466213
+		{ &Z_Construct_UFunction_UBuildComponent_PerformLineTrace, "PerformLineTrace" }, // 3818334090
+		{ &Z_Construct_UFunction_UBuildComponent_RotateBuilding, "RotateBuilding" }, // 2381391634
 		{ &Z_Construct_UFunction_UBuildComponent_SetBuildGhostMeshTransform, "SetBuildGhostMeshTransform" }, // 3382627454
 		{ &Z_Construct_UFunction_UBuildComponent_SetBuildMode, "SetBuildMode" }, // 3657673962
 		{ &Z_Construct_UFunction_UBuildComponent_SpawnBuilding, "SpawnBuilding" }, // 3841426521
@@ -803,19 +803,19 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 	}
 	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_bIsBuildModeOn = { "bIsBuildModeOn", nullptr, (EPropertyFlags)0x0020080000000004, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(UBuildComponent), &Z_Construct_UClass_UBuildComponent_Statics::NewProp_bIsBuildModeOn_SetBit, METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_bIsBuildModeOn_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_bIsBuildModeOn_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingTraceRange_MetaData[] = {
-		{ "Category", "Build Mode Settings" },
-		{ "ModuleRelativePath", "BuildComponent.h" },
-	};
-#endif
-	const UECodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingTraceRange = { "BuildingTraceRange", nullptr, (EPropertyFlags)0x0020080000010005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, BuildingTraceRange), METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingTraceRange_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingTraceRange_MetaData)) };
-#if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingMeshDataTable_MetaData[] = {
 		{ "Category", "Build Mode Settings" },
 		{ "ModuleRelativePath", "BuildComponent.h" },
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingMeshDataTable = { "BuildingMeshDataTable", nullptr, (EPropertyFlags)0x0020080000010005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, BuildingMeshDataTable), Z_Construct_UClass_UDataTable_NoRegister, METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingMeshDataTable_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingMeshDataTable_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingTraceRange_MetaData[] = {
+		{ "Category", "Build Mode Settings" },
+		{ "ModuleRelativePath", "BuildComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingTraceRange = { "BuildingTraceRange", nullptr, (EPropertyFlags)0x0020080000010005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, BuildingTraceRange), METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingTraceRange_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingTraceRange_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_bEnableSnapping_MetaData[] = {
 		{ "Category", "Build Mode Settings" },
@@ -828,19 +828,29 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 	}
 	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_bEnableSnapping = { "bEnableSnapping", nullptr, (EPropertyFlags)0x0020080000010005, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(UBuildComponent), &Z_Construct_UClass_UBuildComponent_Statics::NewProp_bEnableSnapping_SetBit, METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_bEnableSnapping_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_bEnableSnapping_MetaData)) };
 #if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_GridSizeInput_MetaData[] = {
+		{ "Category", "Build Mode Settings" },
+		{ "EditCondition", "bEnableSnapping" },
+		{ "ModuleRelativePath", "BuildComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_GridSizeInput = { "GridSizeInput", nullptr, (EPropertyFlags)0x0020080000010005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, GridSizeInput), METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_GridSizeInput_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_GridSizeInput_MetaData)) };
+#if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_SnappingSensitivity_MetaData[] = {
 		{ "Category", "Build Mode Settings" },
+		{ "EditCondition", "bEnableSnapping" },
 		{ "ModuleRelativePath", "BuildComponent.h" },
 	};
 #endif
 	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_SnappingSensitivity = { "SnappingSensitivity", nullptr, (EPropertyFlags)0x0020080000010001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, SnappingSensitivity), METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_SnappingSensitivity_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_SnappingSensitivity_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_GridSizeInput_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_RotationSpeed_MetaData[] = {
 		{ "Category", "Build Mode Settings" },
 		{ "ModuleRelativePath", "BuildComponent.h" },
+		{ "ToolTip", "Speed of rotation when rotate mesh called." },
 	};
 #endif
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_GridSizeInput = { "GridSizeInput", nullptr, (EPropertyFlags)0x0020080000010005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, GridSizeInput), METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_GridSizeInput_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_GridSizeInput_MetaData)) };
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_RotationSpeed = { "RotationSpeed", nullptr, (EPropertyFlags)0x0020080000010005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, RotationSpeed), METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_RotationSpeed_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_RotationSpeed_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateInterval_MetaData[] = {
 		{ "Category", "Build Mode Settings" },
@@ -848,13 +858,6 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 	};
 #endif
 	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateInterval = { "UpdateInterval", nullptr, (EPropertyFlags)0x0020080000010005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, UpdateInterval), METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateInterval_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateInterval_MetaData)) };
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_RotationSpeed_MetaData[] = {
-		{ "Category", "Build Mode Settingsg" },
-		{ "ModuleRelativePath", "BuildComponent.h" },
-	};
-#endif
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_RotationSpeed = { "RotationSpeed", nullptr, (EPropertyFlags)0x0020080000010005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, RotationSpeed), METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_RotationSpeed_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_RotationSpeed_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_Debug_MetaData[] = {
 		{ "Category", "Build Mode Settings" },
@@ -875,7 +878,7 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_ValidBuildMaterial = { "ValidBuildMaterial", nullptr, (EPropertyFlags)0x0020080000010001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, ValidBuildMaterial), Z_Construct_UClass_UMaterialInterface_NoRegister, METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_ValidBuildMaterial_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_ValidBuildMaterial_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBuildComponent_Statics::NewProp_InvalidLocationMaterial_MetaData[] = {
-		{ "Category", "Building" },
+		{ "Category", "Building Settings" },
 		{ "ModuleRelativePath", "BuildComponent.h" },
 	};
 #endif
@@ -962,13 +965,13 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingMeshDataArray = { "BuildingMeshDataArray", nullptr, (EPropertyFlags)0x0040000000000000, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UBuildComponent, BuildingMeshDataArray), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingMeshDataArray_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingMeshDataArray_MetaData)) }; // 2923310826
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UBuildComponent_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_bIsBuildModeOn,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingTraceRange,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingMeshDataTable,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_BuildingTraceRange,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_bEnableSnapping,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_SnappingSensitivity,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_GridSizeInput,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateInterval,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_SnappingSensitivity,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_RotationSpeed,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_UpdateInterval,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_Debug,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_ValidBuildMaterial,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBuildComponent_Statics::NewProp_InvalidLocationMaterial,
@@ -1025,9 +1028,9 @@ void EmptyLinkFunctionForGeneratedCodeBuildComponent() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UBuildComponent, UBuildComponent::StaticClass, TEXT("UBuildComponent"), &Z_Registration_Info_UClass_UBuildComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBuildComponent), 827716399U) },
+		{ Z_Construct_UClass_UBuildComponent, UBuildComponent::StaticClass, TEXT("UBuildComponent"), &Z_Registration_Info_UClass_UBuildComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBuildComponent), 3676991384U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_195530725(TEXT("/Script/MyProject3"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_2329778701(TEXT("/Script/MyProject3"),
 		Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BuildSystem_MyProject3_Source_MyProject3_BuildComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

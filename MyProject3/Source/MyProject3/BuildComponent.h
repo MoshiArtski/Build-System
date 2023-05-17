@@ -27,34 +27,34 @@ protected:
 	bool bIsBuildModeOn;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
-	int BuildingTraceRange;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
 	UDataTable* BuildingMeshDataTable;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
-	bool bEnableSnapping;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Build Mode Settings")
-	float SnappingSensitivity = 10.0f;
+	int BuildingTraceRange=2000;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
+	bool bEnableSnapping = true;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings", meta = (EditCondition = "bEnableSnapping"))
 	float GridSizeInput = 30.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Build Mode Settings", meta = (EditCondition = "bEnableSnapping"))
+	float SnappingSensitivity = 10.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings", meta = (ToolTip = "Speed of rotation when rotate mesh called."))
+	float RotationSpeed = 45.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
 	float UpdateInterval = 0.01;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settingsg")
-	float RotationSpeed;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
-	bool Debug;
+	bool Debug = false;
 
 
 	UPROPERTY(EditDefaultsOnly, Category = "Building Settings")
 	UMaterialInterface* ValidBuildMaterial;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Building")
+	UPROPERTY(EditDefaultsOnly, Category = "Building Settings")
 	UMaterialInterface* InvalidLocationMaterial;
 
 	// Build Functions
@@ -62,10 +62,10 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Build Mode")
 	void SpawnBuilding();
 
-	UFUNCTION(BlueprintCallable, Category = "Building")
+	UFUNCTION(BlueprintCallable, Category = "Build Mode")
 	void RotateBuilding(float DeltaRotation);
 
-	UFUNCTION(BlueprintCallable, Category = "Building")
+	UFUNCTION(BlueprintCallable, Category = "Build Mode")
 	void ChangeMesh();
 
 	UFUNCTION(BlueprintCallable, Category = "Build Mode")
@@ -73,7 +73,7 @@ protected:
 
 	// Support Functions
 
-	UFUNCTION(BlueprintCallable, Category = "Build")
+	UFUNCTION(BlueprintCallable, Category = "Trace")
 	FHitResult PerformLineTrace(const int LineTraceRange, bool bDebug = false);
 
 	UFUNCTION(BlueprintCallable, Category = "Build Mode")
@@ -112,7 +112,7 @@ private:
 	UStaticMeshComponent* BuildGhostMesh;
 
 	UPROPERTY()
-	int32 CurrentRowIndex;
+	int32 CurrentRowIndex = 0;
 
 	UPROPERTY()
 	FHitResult CachedLineTraceResult;
