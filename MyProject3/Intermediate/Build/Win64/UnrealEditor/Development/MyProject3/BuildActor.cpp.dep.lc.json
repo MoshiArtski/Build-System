@@ -1,0 +1,31 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\buildsystem\\myproject3\\source\\myproject3\\buildactor.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\buildsystem\\myproject3\\intermediate\\build\\win64\\myproject3editor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "d:\\buildsystem\\myproject3\\intermediate\\build\\win64\\unrealeditor\\development\\myproject3\\definitions.myproject3.h",
+            "d:\\buildsystem\\myproject3\\source\\myproject3\\buildactor.h",
+            "d:\\unreal\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\components\\instancedstaticmeshcomponent.h",
+            "d:\\unreal\\ue_5.1\\engine\\source\\runtime\\engine\\public\\elements\\sminstance\\sminstancemanager.h",
+            "d:\\unreal\\ue_5.1\\engine\\source\\runtime\\engine\\public\\elements\\sminstance\\sminstanceelementid.h",
+            "d:\\unreal\\ue_5.1\\engine\\source\\runtime\\engine\\public\\instancedstaticmeshdelegates.h",
+            "d:\\unreal\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\sminstanceelementid.generated.h",
+            "d:\\unreal\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\sminstancemanager.generated.h",
+            "d:\\unreal\\ue_5.1\\engine\\source\\runtime\\engine\\public\\primitiveinstanceupdatecommand.h",
+            "d:\\unreal\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\instancedstaticmeshcomponent.generated.h",
+            "d:\\unreal\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\engine\\datatable.h",
+            "d:\\unreal\\ue_5.1\\engine\\source\\runtime\\engine\\public\\datatableutils.h",
+            "d:\\unreal\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\datatable.generated.h",
+            "d:\\buildsystem\\myproject3\\intermediate\\build\\win64\\unrealeditor\\inc\\myproject3\\uht\\buildactor.generated.h",
+            "d:\\unreal\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetmathlibrary.h",
+            "d:\\unreal\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\kismetmathlibrary.generated.h",
+            "d:\\unreal\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetmathlibrary.inl",
+            "d:\\unreal\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\engine\\staticmeshsocket.h",
+            "d:\\unreal\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\staticmeshsocket.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
