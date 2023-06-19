@@ -1,0 +1,854 @@
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Components/ActorComponent.h"
+#include "UObject/Object.h"
+#include "Engine/DataTable.h"
+#include "Containers/UnrealString.h"
+#include "BuildComponent.generated.h"
+
+class UCameraComponent;
+class USkeletalMeshComponent;
+class APhysicsBuildActor;
+class UDataTable;
+class ABuildActor;
+
+USTRUCT(BlueprintType)
+struct FBuildingPart
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UStaticMesh* Mesh;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    FTransform RelativeTransform;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    int32 BuildPhase;
+
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "What type of mesh is it? e.g. Wall, Door..."))
+    FString MeshType;
+};
+
+USTRUCT(BlueprintType)
+struct FBuildingData : public FTableRowBase
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    FName BuildingName;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    TArray<FBuildingPart> BuildingParts;
+
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "Spawn With Physics?"))
+    bool bSpawnWithPhysics;
+
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "Sockets to Attach To Names"))
+    TArray<FString> SocketNames;
+
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "Items this object can be placed on"))
+    TArray<FString> MeshNames;
+};
+
+USTRUCT(BlueprintType)
+struct FBuildActorIndex
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    ABuildActor* BuildActor;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    int32 Index;
+
+    bool operator==(const FBuildActorIndex& Other) const
+    {
+#if WITH_EDITOR
+        UE_LOG(LogTemp, Warning, TEXT("BuildActor: %p, Index: %d, Other.BuildActor: %p, Other.Index: %d"), BuildActor, Index, Other.BuildActor, Other.Index);
+#endif
+        return BuildActor == Other.BuildActor && Index == Other.Index;
+    }
+};
+
+FORCEINLINE uint32 GetTypeHash(const FBuildActorIndex& InIndex)
+{
+    uint32 HashCode = 0;
+    HashCode = HashCombine(HashCode, GetTypeHash(InIndex.BuildActor));
+    HashCode = HashCombine(HashCode, InIndex.Index);
+    return HashCode;
+}
+
+USTRUCT(BlueprintType)
+struct FBuildActorSet
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    TSet<FBuildActorIndex> BuildActorSet;
+};
+
+USTRUCT()
+struct FBuildingActorInfo
+{
+    GENERATED_BODY()
+
+    UPROPERTY()
+    ABuildActor* BuildingActor;
+
+    UPROPERTY()
+    bool bIsGhost;
+};
+
+USTRUCT(BlueprintType)
+struct FBuildingMeshData : public FTableRowBase
+{
+    GENERATED_BODY()
+
+   public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "Building Name"))
+    FString buildName;
+
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "Building Mesh"))
+    TObjectPtr<UStaticMesh> buildMesh;
+
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "Spawn With Physics?"))
+    bool bSpawnWithPhysics;
+
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "What type of mesh is it? e.g. Wall, Door..."))
+    FString MeshType;
+
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "Sockets to Attach To Names"))
+    TArray<FString> SocketNames;
+
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "Items this object can be placed on"))
+    TArray<FString> MeshNames;
+};
+
+USTRUCT(BlueprintType)
+struct FActorInfo
+{
+    GENERATED_BODY()
+
+    UPROPERTY(BlueprintReadWrite)
+    TMap<int32, FBuildActorSet> ActorInfo;
+};
+
+/**
+ * @class UBuildComponent
+ *
+ * @brief This component provides mechanisms to spawn, manipulate and manage building instances in a game.
+ *
+ * @details The UBuildComponent class contains several delegates, properties and functions that help in constructing
+ * a virtual building in the game. It includes functionalities to spawn structures, build or delete actors,
+ * convert mesh types, handle mesh rotations, manage grid sizes, set up audio effects and much more.
+ *
+ * Delegates like FOnSpawnStructure, FOnBuildGhost, FOnDeleteActor and FOnConvertMesh are used to multicast events
+ * related to their respective operations.
+ *
+ * The class also contains multiple properties for building settings, which includes building mesh data, snapping settings,
+ * build mode flags, line tracing parameters, audio effects, and various building materials.
+ *
+ * The class also offers several BlueprintCallable functions for gameplay scripting, including mechanisms to spawn
+ * buildings, change or rotate meshes, handle ghost visibility, perform build actions, and manipulate build mode.
+ *
+ * @note This component needs to be attached to an actor to function.
+ */
+
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+class KINGDOMSTALE_API UBuildComponent : public UActorComponent
+{
+    GENERATED_BODY()
+
+   public:
+    // Delegates
+
+    /**
+     * @brief Delegate for spawning a new structure.
+     *
+     * @remarks This delegate is called whenever a new structure needs to be spawned.
+     */
+    DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSpawnStructure, const FActorInfo&, BuildPhaseToActors);
+
+    /**
+     * @brief Delegate for building a "ghost" actor.
+     *
+     * @remarks A "ghost" actor is an ephemeral, often transparent or ghost-like version of the actor to be built.
+     * This delegate is triggered whenever a ghost actor is built.
+     */
+    DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnBuildGhost, const FBuildActorIndex&, BuildActorBuilt, const FBuildActorIndex&, ConvertedBuildActorBuilt);
+
+    /**
+     * @brief Delegate for deleting an actor.
+     *
+     * @remarks This delegate is called whenever an actor needs to be deleted.
+     */
+    DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeleteActor, const FBuildActorIndex&, BuildActorBuilt);
+
+    /**
+     * @brief Delegate for converting an actor's mesh.
+     *
+     * @remarks This delegate is triggered whenever the mesh of an actor is converted to a different mesh.
+     */
+    DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnConvertMesh, const FBuildActorIndex&, BuildActorBuilt, const FBuildActorIndex&, ConvertedBuildActorBuilt);
+
+    UPROPERTY(BlueprintAssignable)
+    FOnSpawnStructure OnSpawnStructure;
+
+    UPROPERTY(BlueprintAssignable)
+    FOnBuildGhost OnBuildGhost;
+
+    UPROPERTY(BlueprintAssignable)
+    FOnDeleteActor OnDeleteActor;
+
+    UPROPERTY(BlueprintAssignable)
+    FOnConvertMesh OnConvertMesh;
+
+    // Sets default values for this component's properties
+    UBuildComponent();
+
+    virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+    // Properties
+
+    /**
+     * @brief DataTable containing building meshes information.
+     *
+     * @remarks This property holds a reference to a DataTable that contains the information about the different building meshes.
+     */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "House Build")
+    UDataTable* BuildingMeshDataTable;
+
+    /**
+     * @brief Snapping toggle.
+     *
+     * @remarks This property controls whether or not the placement of buildings will snap to a grid or other predefined alignment (sockets).
+     */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "House Build")
+    bool bEnableSnapping = true;
+
+    /**
+     * @brief The size of the grid to which building placement will snap.
+     *
+     * @remarks This property is only applicable if bEnableSnapping is set to true.
+     */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "House Build", meta = (EditCondition = "bEnableSnapping", EditConditionHides))
+    float GridSizeInput = 30.0f;
+
+    /**
+     * @brief The sensitivity of the grid snapping.
+     *
+     * @remarks This property defines how sensitive the grid snapping is when bEnableSnapping is set to true. Additional sphere trace conducted to allow for snapping to sockets close to hit location.
+     */
+    UPROPERTY(EditDefaultsOnly, Category = "House Build", meta = (EditCondition = "bEnableSnapping", EditConditionHides))
+    float SnappingSensitivity = 10.0f;
+
+    /**
+     * @brief The angle change per rotation call.
+     *
+     * @remarks This property determines the angle change per rotation call in build mode.
+     */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings", meta = (ToolTip = "Angle change per rotate call"))
+    float RotationAngle = 90.0f;
+
+    /**
+     * @brief Maximum number of meshes allowed per building.
+     *
+     * @remarks This property determines the maximum number of individual meshes that can be used in a single building. **Deprecated**
+     */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "House Build")
+    int MaxNumMesherPerBuilding = 20;
+
+    /**
+     * @brief Toggle for aligning rotation with the surface.
+     *
+     * @remarks This property controls whether the building's rotation will be automatically aligned with the surface on which it is placed.
+     */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "House Build")
+    bool bAlignRotationWithSurface = true;
+
+    /**
+     * @brief Toggle for aligning rotation with the surface.
+     *
+     * @remarks This property controls whether the building's rotation will be automatically aligned with the surface on which it is placed.
+     */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "House Build")
+    float LineTraceRange = 1000.0f;
+
+    /**
+     * @brief Offset for spawning the line trace.
+     *
+     * @remarks This property determines how far from the initial point (camera) the line trace should spawn.
+     */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "House Build")
+    float LineTraceSpawnOffset = 10.0f;
+
+    /**
+     * @brief Maximum angle of the slope for placing a building.
+     *
+     * @remarks This property determines the maximum slope angle that is allowed for placing a building.
+     */
+    UPROPERTY(EditDefaultsOnly, Category = "House Build", meta = (EditCondition = "bAlignRotationWithSurface", EditConditionHides))
+    float MaxSlopeAngle = 10.0f;
+
+    /**
+     * @brief Update interval for building mode.
+     *
+     * @remarks This property determines the update interval for the building mode in seconds. Update of location of mesh. The lower the smoother
+     * with increased performance cost.
+     */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
+    float UpdateInterval = 0.01;
+
+    /**
+     * @brief Sound effect to be played when a building action fails.
+     *
+     * @remarks This property holds a reference to a USoundBase object that is played when a building action fails.
+     */
+    UPROPERTY(EditDefaultsOnly, Category = "House Build")
+    USoundBase* FailureSoundEffect;
+
+    /**
+     * @brief Sound effect to be played when a building action succeeds.
+     *
+     * @remarks This property holds a reference to a USoundBase object that is played when a building action succeeds.
+     */
+    UPROPERTY(EditDefaultsOnly, Category = "House Build")
+    USoundBase* SuccessSoundEffect;
+
+    /**
+     * @brief Determines if spawned actor should have custom depth on or off.
+     *
+     * @remarks This property helps to avoid visual issues with multi-layered meshes when in "ghost" mode.
+     */
+    UPROPERTY(EditDefaultsOnly, Category = "House Build")
+    bool bOnGhostCustomDepth = false;
+
+    /**
+     * @brief Determines if the actor should spawn as a "ghost".
+     *
+     * @remarks A "ghost" actor is an ephemeral, often transparent or ghost-like version of the actor to be built.
+     */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Build Mode Settings")
+    bool bSpawnAsGhost = true;
+
+    /**
+     * @brief Material for the "ghost" version of the actor.
+     *
+     * @remarks This property determines the material to use when an actor is spawned as a "ghost".
+     */
+    UPROPERTY(EditDefaultsOnly, Category = "Building Settings", meta = (EditCondition = "bSpawnAsGhost", EditConditionHides))
+    UMaterialInterface* SpawnAsGhostMaterial;
+
+    /**
+     * @brief Material used for indicating a valid building position.
+     *
+     * @remarks This material is applied to the building preview when the current location is a valid place to build.
+     */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UMaterialInterface* ValidBuildMaterial;
+
+    /**
+     * @brief Material used for indicating an invalid building position.
+     *
+     * @remarks This material is applied to the building preview when the current location is not a valid place to build.
+     */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UMaterialInterface* InvalidBuildMaterial;
+
+    // Functions
+
+    /**
+     * @brief Changes the current mesh of the building.
+     *
+     * @remarks This function changes the current mesh of the building to next one in list order.
+     */
+    UFUNCTION(BlueprintCallable, Category = "House Build")
+    void ChangeMesh();
+
+    /**
+     * @brief Spawns a new building.
+     *
+     * @remarks This function handles the spawning of a new building in the game world.
+     */
+    UFUNCTION(BlueprintCallable, Category = "House Build")
+    void SpawnBuilding();
+
+    /**
+     * @brief Updates the build component.
+     *
+     * @remarks This function is responsible for updating the current state of the preview mesh and it's location in the game world.
+     */
+    UFUNCTION(Category = "House Build", BlueprintCallable)
+    void UpdatePreviewMesh();
+
+    /**
+     * @brief Toggles the build mode state.
+     *
+     * @remarks This function allows enabling or disabling the build mode.
+     *
+     * @param bSetBuildMode If true, enables build mode; if false, disables it.
+     */
+    UFUNCTION(BlueprintCallable, Category = "House Build")
+    void SetBuildMode(bool bSetBuildMode)
+    {
+        bBuildModeOn = bSetBuildMode;
+    }
+
+    /**
+     * @brief Retrieves the current state of the build mode.
+     *
+     * @remarks This function allows querying whether build mode is currently enabled or disabled.
+     *
+     * @return Returns true if build mode is enabled, false otherwise.
+     */
+    UFUNCTION(BlueprintCallable, Category = "House Build")
+    FORCEINLINE bool GetBuildMode()
+    {
+        return bBuildModeOn;
+    };
+
+    /**
+     * @brief Hides the ghost actor.
+     *
+     * @remarks This function is used to hide the ghost actor from view. Useful for when build mode off
+     * e.g. switched out of hammer
+     */
+    UFUNCTION(BlueprintCallable, Category = "House Build")
+    void HideGhost();
+
+    /**
+     * @brief Shows the ghost actor.
+     *
+     * @remarks This function is used to make the ghost actor visible. Useful for when switching back to build mode.
+     */
+    UFUNCTION(BlueprintCallable, Category = "House Build")
+    void ShowGhost();
+
+    /**
+     * @brief Initiates the action of converting a building from a ghost to non-ghost actor.
+     *
+     * @remarks This function is used to initiate the process of converting a building from a ghost to non-ghost actor.
+     */
+    UFUNCTION(BlueprintCallable, Category = "House Build")
+    void ConvertGhostToNon();
+
+    /**
+     * @brief Deletes the building.
+     *
+     * @remarks Performs a line trace and deleted building hit by line trace.
+     */
+    UFUNCTION(BlueprintCallable, Category = "House Build")
+    void DeleteBuild();
+
+    /**
+     * @brief Rotates the building with input rotation.
+     *
+     * @remarks This function rotates the currently selected building based on the input rotation.
+     *
+     * @param DeltaRotation The amount to rotate the building.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Build Mode")
+    void RotateBuilding();
+
+    /**
+     * @brief Rotates the building according to the input rotation.
+     *
+     * @remarks This function is used to rotate the building based on component param RotationAngle.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Build Mode")
+    void RotateBuildingWithInputRotation(float DeltaRotation);
+
+    /**
+     * @brief Updates the preview mesh to the specified one.
+     *
+     * @remarks This function updates the preview mesh to the one specified by the target row name in the BuildingMeshDataTable.
+     *
+     * @param TargetRowName The name of the row in the BuildingMeshDataTable containing the desired preview mesh.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Build Mode")
+    void ChangePreviewMeshTo(FName TargetRowName);
+
+    /**
+     * @brief Modifies the mesh of the actor currently being interacted with.
+     *
+     * @remarks This function replaces the mesh of the actor that the player is currently interacting with.
+     *
+     * @param NewMesh The new static mesh to apply to the actor.
+     * @param NewMeshType The type of the new mesh.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Build Mode")
+    void ChangeMeshOfHitActor(UStaticMesh* NewMesh, const FString& NewMeshType);
+
+    /**
+     * @brief Converts the mesh of the building to a specified mesh.
+     *
+     * @remarks This function converts the mesh of the currently selected building to the specified mesh.
+     *
+     * @param Mesh The new static mesh to apply to the building.
+     * @param MeshType The type of the new mesh.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Build Mode")
+    void ConvertMeshTo(UStaticMesh* Mesh, const FString& MeshType);
+
+   protected:
+    /**
+     * @brief Called when play begins for this actor.
+     */
+    virtual void BeginPlay() override;
+
+   private:
+    // Initialization function
+    /**
+     * @brief Index of the current row in the building mesh data table.
+     *
+     * @remarks This index is used to access data about the building's mesh from the BuildingMeshDataTable. Only really useful for if going
+     * to next mesh in list.
+     */
+    UPROPERTY()
+    int32 CurrentRowIndex = 0;
+
+    /**
+     * @brief The number of materials applied to the building mesh.
+     *
+     * @remarks This property stores the number of materials applied to the building's mesh.
+     */
+    UPROPERTY()
+    int32 MaterialCount;
+
+    /**
+     * @brief An array of preview meshes for multibuild functionality.
+     *
+     * @remarks These meshes are displayed when the player is in the process of placing multiple buildings at once.
+     */
+    UPROPERTY()
+    TArray<UStaticMeshComponent*> MultibuildPreviewMesh;
+
+    /**
+     * @brief An array of building mesh data.
+     *
+     * @remarks This array is populated with data about each building mesh from the BuildingMeshDataTable.
+     */
+    UPROPERTY()
+    TArray<FBuildingData> BuildingMeshDataArray;
+
+    /**
+     * @brief State of surface alignment.
+     *
+     * @remarks This property tracks whether the rotation of the building is currently being aligned with the surface it is placed on.
+     */
+    UPROPERTY()
+    bool bAligningRotationWithSurface;
+
+    /**
+     * @brief Status of building validity.
+     *
+     * @remarks This property indicates whether the current building placement is valid.
+     */
+    UPROPERTY()
+    bool bInvalidBuildStatus;
+
+    /**
+     * @brief State of socket snapping.
+     *
+     * @remarks This property indicates whether the building is currently snapping to a socket.
+     */
+    UPROPERTY()
+    bool bSnappingToSocket;
+
+    /**
+     * @brief The rotation set by the user.
+     *
+     * @remarks This property stores the rotation value set by the player for the building placement.
+     */
+    UPROPERTY()
+    FRotator UserSetRotation;
+
+    /**
+     * @brief Handle to the timer that updates the preview mesh.
+     *
+     * @remarks This timer handle controls the timer that periodically updates the preview mesh to reflect the current building placement.
+     */
+    UPROPERTY()
+    FTimerHandle UpdatePreviewMeshTimerHandle;
+
+    /**
+     * @brief The mesh used to render the building.
+     *
+     * @remarks This mesh is used to visually represent the building in the game world.
+     */
+    UPROPERTY()
+    UStaticMesh* BuildingMesh;
+
+    /**
+     * @brief Class of the physics build actor.
+     *
+     * @remarks This is the class of the actor used when placing buildings that have a physical presence in the game world.
+     */
+    UPROPERTY()
+    TSubclassOf<class APhysicsBuildActor> PhysicsBuildActorClass;
+
+    /**
+     * @brief Class of the build actor.
+     *
+     * @remarks This is the class of the actor used when placing buildings in the game world.
+     */
+    UPROPERTY()
+    TSubclassOf<class ABuildActor> BuildActorClass;
+
+    /**
+     * @brief The actor instance that is currently being placed.
+     *
+     * @remarks This actor instance represents the building that is currently being placed in the game world.
+     */
+    UPROPERTY()
+    ABuildActor* NewBuildingInstanceActor;
+
+    /**
+     * @brief A map linking each building mesh to its associated actor.
+     *
+     * @remarks This map is used to quickly find the actor associated with a given building mesh.
+     */
+    UPROPERTY()
+    TMap<UStaticMesh*, ABuildActor*> BuildingActors;
+
+    /**
+     * @brief A map linking each ghost building mesh to its associated actor.
+     *
+     * @remarks This map is used to quickly find the actor associated with a given ghost building mesh.
+     */
+    UPROPERTY()
+    TMap<UStaticMesh*, ABuildActor*> GhostBuiltActors;
+
+    /**
+     * @brief A map linking each mesh component to its associated build phase.
+     *
+     * @remarks This map is used to quickly find the build phase associated with a given mesh component.
+     */
+    UPROPERTY()
+    TMap<UStaticMeshComponent*, int32> MeshComponentToBuildPhase;
+
+    /**
+     * @brief A map linking each mesh component to its associated mesh type.
+     *
+     * @remarks This map is used to quickly find the mesh type associated with a given mesh component.
+     *
+     */
+    UPROPERTY()
+    TMap<UStaticMeshComponent*, FString> MeshComponentToMeshType;
+
+    /**
+     * @brief A map linking each mesh component to its associated spawned index.
+     *
+     * @remarks This map is used to quickly find the spawned index associated with a given mesh component.
+     */
+    UPROPERTY()
+    TMap<UStaticMeshComponent*, int32> MeshComponentToSpawnedIndex;
+
+    /**
+     * @brief A map linking each build phase to its associated set of build actors.
+     *
+     * @remarks This map is used to quickly find the set of build actors associated with a given build phase.
+     */
+    UPROPERTY()
+    TMap<int32, FBuildActorSet> BuildPhaseSets;
+
+    /**
+     * @brief A map linking each build phase to its associated set of build actors.
+     *
+     * @remarks This map is used to quickly find the set of build actors associated with a given build phase.
+     */
+    UPROPERTY()
+    TMap<int32, FBuildActorSet> BuildPhaseToActors;
+
+    /**
+     * @brief A set of all build actors with a build phase.
+     *
+     * @remarks This set contains all build actors that have a build phase of current actors.
+     */
+    UPROPERTY()
+    TSet<ABuildActor*> ActorsWithBuildPhase;
+
+    // Caches
+
+    /**
+     * @brief The actor that owns this component.
+     *
+     * @remarks This is a reference to the actor that owns this component.
+     */
+    UPROPERTY()
+    AActor* Owner;
+
+    /**
+     * @brief The camera component associated with this component.
+     *
+     * @remarks This is a reference to the camera component that is used to view the scene from the perspective of this component.
+     */
+    UPROPERTY()
+    UCameraComponent* Camera;
+
+    /**
+     * @brief The skeletal mesh component associated with this component.
+     *
+     * @remarks This is a reference to the skeletal mesh component that is used to render the visual representation of this component.
+     */
+    UPROPERTY()
+    USkeletalMeshComponent* SkeletalMeshComponent;
+
+    /**
+     * @brief The result of the most recent line trace.
+     *
+     * @remarks This is a cached result of the most recent line trace performed by this component.
+     */
+    UPROPERTY()
+    FHitResult CachedLineTraceResult;
+
+    /**
+     * @brief Sets the material for the preview mesh.
+     *
+     * @remarks This function sets the material used to render the preview mesh.
+     *
+     * @param Material The material to apply to the preview mesh.
+     */
+    UFUNCTION()
+    void SetPreviewMeshMaterial(UMaterialInterface* Material);
+
+    /**
+     * @brief Gets the location to spawn the new building, taking snapping into account.
+     *
+     * @remarks This function calculates the location to spawn the new building, considering whether snapping is enabled.
+     *
+     * @param OutSpawnRotation The output rotation for the new building.
+     *
+     * @return Returns the location to spawn the new building.
+     */
+    UFUNCTION()
+    FVector GetSpawnLocationWithSnapping(FRotator& OutSpawnRotation);
+
+    /**
+     * @brief Gets the location to spawn the new building, taking socket attachment into account.
+     *
+     * @remarks This function calculates the location to spawn the new building, considering whether it should be attached to a socket.
+     *
+     * @param HitBuildingActor The actor of the building that was hit by the placement raycast.
+     * @param HitBuildingActorSingle The actor of the single building that was hit by the placement raycast.
+     * @param OutSpawnRotation The output rotation for the new building.
+     *
+     * @return Returns the location to spawn the new building.
+     */
+    UFUNCTION()
+    FVector GetSpawnLocationWithSocketAttachment(ABuildActor* HitBuildingActor, APhysicsBuildActor* HitBuildingActorSingle, FRotator& OutSpawnRotation);
+
+    /**
+     * @brief List of valid socket tags.
+     *
+     * @remarks This list is used to validate socket tags when building.
+     */
+    const TArray<FString>* SocketTagList;
+
+    /**
+     * @brief List of valid mesh names for placement on top off.
+     *
+     * @remarks This list is used to validate the mesh types that can current preview mesh can be placed on top of.
+     */
+    const TArray<FString>* AllowedPlacementMeshList;
+
+    /**
+     * @brief Initializes the building mesh data array.
+     *
+     * @remarks This function is called to setup initial building mesh data.
+     */
+    UFUNCTION()
+    void InitializeBuildingMeshDataArray();
+
+    /**
+     * @brief Initializes the building mesh data array.
+     *
+     * @remarks This function is called to setup initial building mesh data.
+     */
+    UFUNCTION()
+    FHitResult PerformLineTrace();
+
+    /**
+     * @brief Hides the preview mesh.
+     *
+     * @remarks This function is called to hide the preview mesh in the world.
+     */
+    UFUNCTION()
+    void HidePreviewMesh();
+
+    /**
+     * @brief Shows the preview mesh.
+     *
+     * @remarks This function is called to show the preview mesh in the world.
+     */
+    UFUNCTION()
+    void ShowPreviewMesh();
+
+    /**
+     * @brief Sets up the line trace.
+     *
+     * @remarks This function is called to setup parameters required for line tracing including getting owner,
+     * and camera.
+     */
+    UFUNCTION()
+    void LineTraceSetup();
+
+    /**
+     * @brief Sets the multibuild preview mesh transform.
+     *
+     * @remarks This function is called to set the location and optional rotation of the multibuild preview mesh.
+     */
+    void SetMultibuildPreviewMeshTransform(const FVector& SpawnLocation, const TOptional<FRotator>& SpawnRotation);
+
+    /**
+     * @brief Sets up the update timer.
+     *
+     * @remarks This function is used to setup a timer for updating certain properties or calling certain functions. Only used for
+     * UpdateBuilding.
+     */
+
+    void SetupUpdateTimer(void (UBuildComponent::*Function)());
+
+    /**
+     * @brief Indicates whether physics should be enabled upon spawning.
+     *
+     * @remarks This property is used to determine whether physics should be enabled for the spawned actor or not. Spawns actor as a static mesh
+     * instead of instanced.
+     */
+    UPROPERTY()
+    bool bSpawnWithPhysics;
+
+    /**
+     * @brief Converts the instance with given index to an actor.
+     *
+     * @remarks This function is called to convert a static mesh instance to an actor with given index. **DEPRECATED
+     * @return The newly created actor if conversion is successful, empty otherwise.
+     */
+    TOptional<AActor*> ConvertToActorWithIndex(int32 InstanceIndex);
+
+    /**
+     * @brief Determines if the component is in build mode.
+     *
+     * @remarks This property indicates whether the build mode is currently active or not.
+     */
+    UPROPERTY()
+    bool bBuildModeOn;
+
+    /**
+     * @brief Adds a new actor using the specified mesh.
+     *
+     * @remarks This function is used to add a new actor to the game world using the specified mesh and transform.
+     *
+     * @param MeshToSpawn The mesh to be used for the new actor.
+     * @param bToSpawnAsGhost Indicates whether the new actor should be spawned as a ghost.
+     * @param InstanceTransform The transform to be used for the new actor.
+     * @param ActorMeshType The type of the mesh.
+     * @param BuildPhase The phase of building at which the actor is added.
+     *
+     * @return Returns the UniqueID of the new actor in the actor list.
+     */
+    UFUNCTION()
+    int32 AddNewActorUsingMesh(UStaticMesh* MeshToSpawn, bool bToSpawnAsGhost, FTransform InstanceTransform, const FString& ActorMeshType, int32 BuildPhase = 0);
+};
